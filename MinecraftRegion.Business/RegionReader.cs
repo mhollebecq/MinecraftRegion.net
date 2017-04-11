@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ionic.Zlib;
+using MinecraftRegion.Business.Models.Tags;
 
 namespace MinecraftRegion.Business
 {
@@ -45,49 +47,7 @@ namespace MinecraftRegion.Business
                         switch (compresionType)
                         {
                             case 2:
-                                byte[] compressedChunk = new byte[4091];
-                                binaryReader.Read(compressedChunk, 0, 4091);
-                                using (MemoryStream mStream = new MemoryStream(compressedChunk))
-                                {
-                                    using (Ionic.Zlib.ZlibStream zLibStream = new Ionic.Zlib.ZlibStream(mStream, Ionic.Zlib.CompressionMode.Decompress))
-                                    {
-                                        //byte[] decompressedChunk = new byte[zLibStream.BufferSize];
-                                        byte[] tagType = new byte[1];
-                                        zLibStream.Read(tagType, 0, 1);
-                                        switch (tagType[0])
-                                        {
-                                            case 0:
-                                                break;
-                                            case 1:
-                                                break;
-                                            case 2:
-                                                break;
-                                            case 3:
-                                                break;
-                                            case 4:
-                                                break;
-                                            case 5:
-                                                break;
-                                            case 6:
-                                                break;
-                                            case 7:
-                                                break;
-                                            case 8:
-                                                break;
-                                            case 9:
-                                                break;
-                                            case 10:
-                                                break;
-                                            case 11:
-                                                break;
-                                            case 12:
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        //zLibStream.ReadAsync (decompressedChunk, 0, zLibStream.BufferSize);
-                                    }
-                                }
+                                ParseByCompressionZLib(binaryReader);
                                 break;
                             default:
                                 throw new NotImplementedException("Only compression ZLib is implemented");
@@ -95,6 +55,108 @@ namespace MinecraftRegion.Business
                     }
                 }
             }
+        }
+
+        private void ParseByCompressionZLib(BinaryReader binaryReader)
+        {
+            byte[] compressedChunk = new byte[4091];
+            binaryReader.Read(compressedChunk, 0, 4091);
+            using (MemoryStream mStream = new MemoryStream(compressedChunk))
+            {
+                using (Ionic.Zlib.ZlibStream zLibStream = new Ionic.Zlib.ZlibStream(mStream, Ionic.Zlib.CompressionMode.Decompress))
+                {
+                    //byte[] decompressedChunk = new byte[zLibStream.BufferSize];
+                    GetTag(zLibStream);
+                    //zLibStream.ReadAsync (decompressedChunk, 0, zLibStream.BufferSize);
+                }
+            }
+        }
+
+        private BaseTAG GetTag(Stream stream)
+        {
+            byte[] tagType = new byte[1];
+            stream.Read(tagType, 0, 1);
+            switch (tagType[0])
+            {
+                case 0:
+                    return new TAG_End();
+                case 1:
+                    return ParseTAG_Byte(stream);
+                case 2:
+                    break;
+                case 3:
+                    return ParseTAG_Int(stream);
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    return ParseTAG_Compound(stream);
+                case 11:
+                    break;
+                case 12:
+                    break;
+                default:
+                    break;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        private TAG_Int ParseTAG_Int(Stream stream)
+        {
+            TAG_Int tag = new TAG_Int();
+            tag.Name = GetTAGName(stream);
+            byte[] valueByte = new byte[4];
+            stream.Read(valueByte, 0, 4);
+            tag.Value = (valueByte[0] << 24) + (valueByte[1] << 16) + (valueByte[2] << 8) + (valueByte[3]);
+            return tag;
+        }
+
+        private TAG_Byte ParseTAG_Byte(Stream stream)
+        {
+            TAG_Byte tag = new TAG_Byte();
+            tag.Name = GetTAGName(stream);
+            byte[] valueByte = new byte[1];
+            stream.Read(valueByte, 0, 1);
+            tag.Value = (sbyte)valueByte[0];
+            return tag;
+        }
+
+        private TAG_Compound ParseTAG_Compound(Stream stream)
+        {
+            TAG_Compound tag = new TAG_Compound();
+            tag.Name = GetTAGName(stream);
+            BaseTAG currentChild = null;
+            while(currentChild == null || !(currentChild is TAG_End))
+            {
+                currentChild = GetTag(stream);
+                tag.Children.Add(currentChild);
+            }
+            return tag;
+        }
+
+        private string GetTAGName(Stream zLibStream)
+        {
+            byte[] textLengthArray = new byte[2];
+            zLibStream.Read(textLengthArray, 0, 2);
+            int textLength = (textLengthArray[0] << 8) + textLengthArray[1];
+            byte[] textContentArray = new byte[textLength];
+            zLibStream.Read(textContentArray, 0, textLength);
+            StringBuilder sb = new StringBuilder();
+            foreach (byte c in textContentArray)
+            {
+                sb.Append((char)c);
+            }
+            return sb.ToString();
         }
 
         private List<int> ReadTimeStamps(byte[] headerTimestamps)
