@@ -30,7 +30,7 @@ namespace MinecraftRegion.Business
                 read = binaryReader.Read(headerTimestamps, 0, 4096);
                 var locations = ReadLocations(headerLocations);
                 var timeStamps = ReadTimeStamps(headerTimestamps);
-                for (int iLocation = 21; iLocation < locations.Count; iLocation++)
+                for (int iLocation = 0; iLocation < locations.Count; iLocation++)
                 {
                     int timestamp = timeStamps[iLocation];
                     ChunkLocation location = locations[iLocation];
@@ -83,7 +83,7 @@ namespace MinecraftRegion.Business
                 case 1:
                     return ParseTAG_Byte(stream);
                 case 2:
-                    break;
+                    return ParseTAG_Short(stream);
                 case 3:
                     return ParseTAG_Int(stream);
                 case 4:
@@ -97,7 +97,7 @@ namespace MinecraftRegion.Business
                 case 8:
                     break;
                 case 9:
-                    break;
+                    return ParseTAG_List(stream);
                 case 10:
                     return ParseTAG_Compound(stream);
                 case 11:
@@ -111,24 +111,80 @@ namespace MinecraftRegion.Business
             throw new NotImplementedException();
         }
 
+        private TAG_List ParseTAG_List(Stream stream)
+        {
+            //byte[] debug100 = GetDebug100(stream, out stream);
+            TAG_List list = new TAG_List();
+            list.Name = GetTAGName(stream);
+            list.TagId = GetSbyte(stream);
+            list.Size = GetInt(stream);
+            for (int iList = 0; iList < list.Size; iList++)
+            {
+                list.Children.Add(GetTag(stream));
+            }
+            return list;
+        }
+
+        private static byte[] GetDebug100(Stream streamIn, out Stream streamOut)
+        {
+            streamOut = new MemoryStream();
+            streamIn.CopyTo(streamOut);
+            byte[] debug100 = new byte[100];
+            streamOut.Position = 0;
+            streamOut.Read(debug100, 0, 100);
+            streamOut.Position = 0;
+            return debug100;
+        }
+
         private TAG_Int ParseTAG_Int(Stream stream)
         {
             TAG_Int tag = new TAG_Int();
             tag.Name = GetTAGName(stream);
+            int composed = GetInt(stream);
+            tag.Value = composed;
+            return tag;
+        }
+
+        private static int GetInt(Stream stream)
+        {
             byte[] valueByte = new byte[4];
             stream.Read(valueByte, 0, 4);
-            tag.Value = (valueByte[0] << 24) + (valueByte[1] << 16) + (valueByte[2] << 8) + (valueByte[3]);
+            int composed = (valueByte[0] << 24) + (valueByte[1] << 16) + (valueByte[2] << 8) + (valueByte[3]);
+            return composed;
+        }
+
+        private TAG_Short ParseTAG_Short(Stream stream)
+        {
+            TAG_Short tag = new TAG_Short();
+            tag.Name = GetTAGName(stream);
+            short composed = GetShort(stream);
+            tag.Value = composed;
             return tag;
+        }
+
+        private static short GetShort(Stream stream)
+        {
+            byte[] valueByte = new byte[4];
+            stream.Read(valueByte, 0, 4);
+            short composed = (short)((valueByte[0] << 8) + (valueByte[1]));
+            return composed;
         }
 
         private TAG_Byte ParseTAG_Byte(Stream stream)
         {
             TAG_Byte tag = new TAG_Byte();
             tag.Name = GetTAGName(stream);
+            sbyte composed = GetSbyte(stream);
+            tag.Value = composed;
+            return tag;
+        }
+
+        private static sbyte GetSbyte(Stream stream)
+        {
             byte[] valueByte = new byte[1];
             stream.Read(valueByte, 0, 1);
-            tag.Value = (sbyte)valueByte[0];
-            return tag;
+            sbyte composed = (sbyte)valueByte[0];
+            return composed;
         }
 
         private TAG_Compound ParseTAG_Compound(Stream stream)
@@ -136,7 +192,7 @@ namespace MinecraftRegion.Business
             TAG_Compound tag = new TAG_Compound();
             tag.Name = GetTAGName(stream);
             BaseTAG currentChild = null;
-            while(currentChild == null || !(currentChild is TAG_End))
+            while (currentChild == null || !(currentChild is TAG_End))
             {
                 currentChild = GetTag(stream);
                 tag.Children.Add(currentChild);
