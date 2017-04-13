@@ -12,10 +12,13 @@ namespace MinecraftRegion.Business.Models.Tags
 
         public int Size { get; set; }
 
-        public List<BaseTAG> Children { get; set; }
+        public List<object> Children { get; set; }
 
         public override byte TagType { get { return 9; } }
 
-
+        public TAG_List()
+        {
+            Children = new List<object>();
+        }
     }
 }

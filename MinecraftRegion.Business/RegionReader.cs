@@ -47,7 +47,7 @@ namespace MinecraftRegion.Business
                         switch (compresionType)
                         {
                             case 2:
-                                ParseByCompressionZLib(binaryReader);
+                                var rootTag = ParseByCompressionZLib(binaryReader);
                                 break;
                             default:
                                 throw new NotImplementedException("Only compression ZLib is implemented");
@@ -57,7 +57,7 @@ namespace MinecraftRegion.Business
             }
         }
 
-        private void ParseByCompressionZLib(BinaryReader binaryReader)
+        private BaseTAG ParseByCompressionZLib(BinaryReader binaryReader)
         {
             byte[] compressedChunk = new byte[4091];
             binaryReader.Read(compressedChunk, 0, 4091);
@@ -66,7 +66,7 @@ namespace MinecraftRegion.Business
                 using (Ionic.Zlib.ZlibStream zLibStream = new Ionic.Zlib.ZlibStream(mStream, Ionic.Zlib.CompressionMode.Decompress))
                 {
                     //byte[] decompressedChunk = new byte[zLibStream.BufferSize];
-                    GetTag(zLibStream);
+                    return GetTag(zLibStream);
                     //zLibStream.ReadAsync (decompressedChunk, 0, zLibStream.BufferSize);
                 }
             }
@@ -74,9 +74,15 @@ namespace MinecraftRegion.Business
 
         private BaseTAG GetTag(Stream stream)
         {
-            byte[] tagType = new byte[1];
-            stream.Read(tagType, 0, 1);
-            switch (tagType[0])
+            byte[] tagTypeArray = new byte[1];
+            stream.Read(tagTypeArray, 0, 1);
+            byte tagType = tagTypeArray[0];
+            return GetTagByType(stream, tagType);
+        }
+
+        private BaseTAG GetTagByType(Stream stream, byte tagType)
+        {
+            switch (tagType)
             {
                 case 0:
                     return new TAG_End();
@@ -87,13 +93,13 @@ namespace MinecraftRegion.Business
                 case 3:
                     return ParseTAG_Int(stream);
                 case 4:
-                    break;
+                    return ParseTAG_Long(stream);
                 case 5:
-                    break;
+                    return ParseTAG_Float(stream);
                 case 6:
-                    break;
+                    return ParseTAG_Double(stream);
                 case 7:
-                    break;
+                    return ParseTAG_ByteArray(stream);
                 case 8:
                     break;
                 case 9:
@@ -101,7 +107,7 @@ namespace MinecraftRegion.Business
                 case 10:
                     return ParseTAG_Compound(stream);
                 case 11:
-                    break;
+                    return ParseTAG_IntArray(stream);
                 case 12:
                     break;
                 default:
@@ -111,16 +117,71 @@ namespace MinecraftRegion.Business
             throw new NotImplementedException();
         }
 
+        private TAG_ByteArray ParseTAG_ByteArray(Stream stream)
+        {
+            TAG_ByteArray tag = new TAG_ByteArray();
+            tag.Name = GetTAGName(stream);
+            int size = GetInt(stream);
+            tag.Values = new sbyte[size];
+            for (int i = 0; i < size; i++)
+            {
+                tag.Values[i] = GetSbyte(stream);
+            }
+
+            return tag;
+        }
+
+        private TAG_IntArray ParseTAG_IntArray(Stream stream)
+        {
+            TAG_IntArray tag = new TAG_IntArray();
+            tag.Name = GetTAGName(stream);
+            int size = GetInt(stream);
+            tag.Values = new int[size];
+            for (int i = 0; i < size; i++)
+            {
+                tag.Values[i] = GetInt(stream);
+            }
+
+            return tag;
+        }
+
+        private TAG_Double ParseTAG_Double(Stream stream)
+        {
+            TAG_Double tag = new TAG_Double();
+            tag.Name = GetTAGName(stream);
+            double composed = GetDouble(stream);
+            tag.Value = composed;
+            return tag;
+        }
+
+        private TAG_Float ParseTAG_Float(Stream stream)
+        {
+            TAG_Float tag = new TAG_Float();
+            tag.Name = GetTAGName(stream);
+            float composed = GetFloat(stream);
+            tag.Value = composed;
+            return tag;
+        }
+
+        private TAG_Long ParseTAG_Long(Stream stream)
+        {
+            TAG_Long tag = new TAG_Long();
+            tag.Name = GetTAGName(stream);
+            long composed = GetLong(stream);
+            tag.Value = composed;
+            return tag;
+        }
+
         private TAG_List ParseTAG_List(Stream stream)
         {
-            //byte[] debug100 = GetDebug100(stream, out stream);
             TAG_List list = new TAG_List();
             list.Name = GetTAGName(stream);
             list.TagId = GetSbyte(stream);
             list.Size = GetInt(stream);
             for (int iList = 0; iList < list.Size; iList++)
             {
-                list.Children.Add(GetTag(stream));
+#warning là ça fait du gros caca !! Appeller simple value en fait, mais qui doit gérer les tags autre que primitifs (Compound notamment)
+                list.Children.Add(GetTagByType(stream, (byte)list.TagId));
             }
             return list;
         }
@@ -134,6 +195,78 @@ namespace MinecraftRegion.Business
             streamOut.Read(debug100, 0, 100);
             streamOut.Position = 0;
             return debug100;
+        }
+
+        private object GetSimpleValue(byte tagId, Stream stream)
+        {
+            switch (tagId)
+            {
+                case 1:
+                    return GetSbyte(stream);
+                case 2:
+                    return GetShort(stream);
+                case 3:
+                    return GetInt(stream);
+                case 4:
+                    return GetLong(stream);
+                case 5:
+                    return GetFloat(stream);
+                case 6:
+                    return GetDouble(stream);
+                default:
+                    break;
+            }
+            throw new NotImplementedException();
+        }
+
+        private long GetLong(Stream stream)
+        {
+            byte[] valueByte = new byte[4];
+            stream.Read(valueByte, 0, 4);
+            int composed1 = (valueByte[0] << 24) + (valueByte[1] << 16) + (valueByte[2] << 8) + (valueByte[3]);
+            stream.Read(valueByte, 0, 4);
+            int composed2 = (valueByte[0] << 24) + (valueByte[1] << 16) + (valueByte[2] << 8) + (valueByte[3]);
+            return (composed1 << 32) + composed2;
+        }
+
+        private double GetDouble(Stream stream)
+        {
+            byte[] doubleBytes = new byte[8];
+            stream.Read(doubleBytes, 0, 8);
+            if (BitConverter.IsLittleEndian)
+            {
+                //It's big endian ! we have to invert
+                byte temp = doubleBytes[0];
+                doubleBytes[0] = doubleBytes[7];
+                doubleBytes[7] = temp;
+                temp = doubleBytes[1];
+                doubleBytes[1] = doubleBytes[6];
+                doubleBytes[6] = temp;
+                temp = doubleBytes[2];
+                doubleBytes[2] = doubleBytes[5];
+                doubleBytes[5] = temp;
+                temp = doubleBytes[3];
+                doubleBytes[3] = doubleBytes[4];
+                doubleBytes[4] = temp;
+            }
+            return BitConverter.ToDouble(doubleBytes, 0);
+        }
+
+        private float GetFloat(Stream stream)
+        {
+            byte[] floatBytes = new byte[4];
+            stream.Read(floatBytes, 0, 4);
+            if (BitConverter.IsLittleEndian)
+            {
+                //It's big endian ! we have to invert
+                byte temp = floatBytes[0];
+                floatBytes[0] = floatBytes[3];
+                floatBytes[3] = temp;
+                temp = floatBytes[1];
+                floatBytes[1] = floatBytes[2];
+                floatBytes[2] = temp;
+            }
+            return BitConverter.ToSingle(floatBytes, 0);
         }
 
         private TAG_Int ParseTAG_Int(Stream stream)
