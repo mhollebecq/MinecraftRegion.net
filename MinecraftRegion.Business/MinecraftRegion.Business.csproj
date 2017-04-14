@@ -57,6 +57,7 @@
     <Compile Include="Models\Tags\TAG_List.cs" />
     <Compile Include="Models\Tags\TAG_Short.cs" />
     <Compile Include="Models\Tags\TAG_Int.cs" />
+    <Compile Include="Models\Tags\TAG_String.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionReader.cs" />
     <Compile Include="Models\Tags\TAG_Long.cs" />

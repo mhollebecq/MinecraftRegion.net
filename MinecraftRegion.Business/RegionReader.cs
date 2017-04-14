@@ -101,7 +101,7 @@ namespace MinecraftRegion.Business
                 case 7:
                     return ParseTAG_ByteArray(stream);
                 case 8:
-                    break;
+                    return ParseTAG_String(stream);
                 case 9:
                     return ParseTAG_List(stream);
                 case 10:
@@ -115,6 +115,15 @@ namespace MinecraftRegion.Business
             }
 
             throw new NotImplementedException();
+        }
+
+        private TAG_String ParseTAG_String(Stream stream)
+        {
+            TAG_String tag = new TAG_String();
+            tag.Name = GetTAGName(stream);
+            string composed = GetTAGName(stream);
+            tag.Value = composed;
+            return tag;
         }
 
         private TAG_ByteArray ParseTAG_ByteArray(Stream stream)
@@ -156,6 +165,16 @@ namespace MinecraftRegion.Business
 
         private TAG_Float ParseTAG_Float(Stream stream)
         {
+            Byte[] debug100 = GetDebug100(stream, out stream);
+            //int textLength = 8;
+            //byte[] textContentArray = new byte[textLength];
+            //stream.Read(textContentArray, 0, textLength);
+            //StringBuilder sb = new StringBuilder();
+            //foreach (byte c in textContentArray)
+            //{
+            //    sb.Append((char)c);
+            //}
+            //var toto = sb.ToString();
             TAG_Float tag = new TAG_Float();
             tag.Name = GetTAGName(stream);
             float composed = GetFloat(stream);
@@ -180,8 +199,7 @@ namespace MinecraftRegion.Business
             list.Size = GetInt(stream);
             for (int iList = 0; iList < list.Size; iList++)
             {
-#warning là ça fait du gros caca !! Appeller simple value en fait, mais qui doit gérer les tags autre que primitifs (Compound notamment)
-                list.Children.Add(GetTagByType(stream, (byte)list.TagId));
+                list.Children.Add(GetSimpleValue((byte)list.TagId, stream ));
             }
             return list;
         }
@@ -213,6 +231,12 @@ namespace MinecraftRegion.Business
                     return GetFloat(stream);
                 case 6:
                     return GetDouble(stream);
+                case 9:
+                    return ParseTAG_List(stream);
+                case 10:
+                    return GetTAG_Compound(stream);
+                case 11:
+                    return ParseTAG_IntArray(stream);
                 default:
                     break;
             }
@@ -324,6 +348,23 @@ namespace MinecraftRegion.Business
         {
             TAG_Compound tag = new TAG_Compound();
             tag.Name = GetTAGName(stream);
+            BaseTAG currentChild = null;
+            while (currentChild == null || !(currentChild is TAG_End))
+            {
+                currentChild = GetTag(stream);
+                tag.Children.Add(currentChild);
+            }
+            return tag;
+        }
+
+        /// <summary>
+        /// Does not get TAG Name, only value
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        private TAG_Compound GetTAG_Compound(Stream stream)
+        {
+            TAG_Compound tag = new TAG_Compound();
             BaseTAG currentChild = null;
             while (currentChild == null || !(currentChild is TAG_End))
             {
