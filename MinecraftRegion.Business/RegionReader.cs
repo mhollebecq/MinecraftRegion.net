@@ -165,16 +165,6 @@ namespace MinecraftRegion.Business
 
         private TAG_Float ParseTAG_Float(Stream stream)
         {
-            Byte[] debug100 = GetDebug100(stream, out stream);
-            //int textLength = 8;
-            //byte[] textContentArray = new byte[textLength];
-            //stream.Read(textContentArray, 0, textLength);
-            //StringBuilder sb = new StringBuilder();
-            //foreach (byte c in textContentArray)
-            //{
-            //    sb.Append((char)c);
-            //}
-            //var toto = sb.ToString();
             TAG_Float tag = new TAG_Float();
             tag.Name = GetTAGName(stream);
             float composed = GetFloat(stream);
@@ -199,7 +189,10 @@ namespace MinecraftRegion.Business
             list.Size = GetInt(stream);
             for (int iList = 0; iList < list.Size; iList++)
             {
-                list.Children.Add(GetSimpleValue((byte)list.TagId, stream ));
+                byte[] debug100 = GetDebug100(stream, out stream);
+                string name = ((char)debug100[3]).ToString() + (char)debug100[4] + (char)debug100[5] + (char)debug100[6] + (char)debug100[7] + (char)debug100[8] + (char)debug100[9] + (char)debug100[10];
+
+                list.Children.Add(GetSimpleValue((byte)list.TagId, stream));
             }
             return list;
         }

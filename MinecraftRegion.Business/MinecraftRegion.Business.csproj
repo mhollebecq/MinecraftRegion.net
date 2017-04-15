@@ -47,6 +47,7 @@
     <Compile Include="Models\ChunkLocation.cs" />
     <Compile Include="Models\Tags\NamedTAG.cs" />
     <Compile Include="Models\Tags\BaseTAG.cs" />
+    <Compile Include="Models\Tags\TagType.cs" />
     <Compile Include="Models\Tags\TAG_Byte.cs" />
     <Compile Include="Models\Tags\TAG_ByteArray.cs" />
     <Compile Include="Models\Tags\TAG_Compound.cs" />
