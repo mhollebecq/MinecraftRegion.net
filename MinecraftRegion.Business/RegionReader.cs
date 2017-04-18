@@ -65,9 +65,7 @@ namespace MinecraftRegion.Business
             {
                 using (Ionic.Zlib.ZlibStream zLibStream = new Ionic.Zlib.ZlibStream(mStream, Ionic.Zlib.CompressionMode.Decompress))
                 {
-                    //byte[] decompressedChunk = new byte[zLibStream.BufferSize];
                     return GetTag(zLibStream);
-                    //zLibStream.ReadAsync (decompressedChunk, 0, zLibStream.BufferSize);
                 }
             }
         }
@@ -120,8 +118,8 @@ namespace MinecraftRegion.Business
         private TAG_String ParseTAG_String(Stream stream)
         {
             TAG_String tag = new TAG_String();
-            tag.Name = GetTAGName(stream);
-            string composed = GetTAGName(stream);
+            tag.Name = GetString(stream);
+            string composed = GetString(stream);
             tag.Value = composed;
             return tag;
         }
@@ -129,7 +127,7 @@ namespace MinecraftRegion.Business
         private TAG_ByteArray ParseTAG_ByteArray(Stream stream)
         {
             TAG_ByteArray tag = new TAG_ByteArray();
-            tag.Name = GetTAGName(stream);
+            tag.Name = GetString(stream);
             int size = GetInt(stream);
             tag.Values = new sbyte[size];
             for (int i = 0; i < size; i++)
@@ -143,7 +141,7 @@ namespace MinecraftRegion.Business
         private TAG_IntArray ParseTAG_IntArray(Stream stream)
         {
             TAG_IntArray tag = new TAG_IntArray();
-            tag.Name = GetTAGName(stream);
+            tag.Name = GetString(stream);
             int size = GetInt(stream);
             tag.Values = new int[size];
             for (int i = 0; i < size; i++)
@@ -157,7 +155,7 @@ namespace MinecraftRegion.Business
         private TAG_Double ParseTAG_Double(Stream stream)
         {
             TAG_Double tag = new TAG_Double();
-            tag.Name = GetTAGName(stream);
+            tag.Name = GetString(stream);
             double composed = GetDouble(stream);
             tag.Value = composed;
             return tag;
@@ -166,7 +164,7 @@ namespace MinecraftRegion.Business
         private TAG_Float ParseTAG_Float(Stream stream)
         {
             TAG_Float tag = new TAG_Float();
-            tag.Name = GetTAGName(stream);
+            tag.Name = GetString(stream);
             float composed = GetFloat(stream);
             tag.Value = composed;
             return tag;
@@ -175,7 +173,7 @@ namespace MinecraftRegion.Business
         private TAG_Long ParseTAG_Long(Stream stream)
         {
             TAG_Long tag = new TAG_Long();
-            tag.Name = GetTAGName(stream);
+            tag.Name = GetString(stream);
             long composed = GetLong(stream);
             tag.Value = composed;
             return tag;
@@ -184,14 +182,11 @@ namespace MinecraftRegion.Business
         private TAG_List ParseTAG_List(Stream stream)
         {
             TAG_List list = new TAG_List();
-            list.Name = GetTAGName(stream);
+            list.Name = GetString(stream);
             list.TagId = GetSbyte(stream);
             list.Size = GetInt(stream);
             for (int iList = 0; iList < list.Size; iList++)
             {
-                byte[] debug100 = GetDebug100(stream, out stream);
-                string name = ((char)debug100[3]).ToString() + (char)debug100[4] + (char)debug100[5] + (char)debug100[6] + (char)debug100[7] + (char)debug100[8] + (char)debug100[9] + (char)debug100[10];
-
                 list.Children.Add(GetSimpleValue((byte)list.TagId, stream));
             }
             return list;
@@ -224,6 +219,8 @@ namespace MinecraftRegion.Business
                     return GetFloat(stream);
                 case 6:
                     return GetDouble(stream);
+                case 8:
+                    return GetString(stream);
                 case 9:
                     return ParseTAG_List(stream);
                 case 10:
@@ -289,7 +286,7 @@ namespace MinecraftRegion.Business
         private TAG_Int ParseTAG_Int(Stream stream)
         {
             TAG_Int tag = new TAG_Int();
-            tag.Name = GetTAGName(stream);
+            tag.Name = GetString(stream);
             int composed = GetInt(stream);
             tag.Value = composed;
             return tag;
@@ -306,7 +303,7 @@ namespace MinecraftRegion.Business
         private TAG_Short ParseTAG_Short(Stream stream)
         {
             TAG_Short tag = new TAG_Short();
-            tag.Name = GetTAGName(stream);
+            tag.Name = GetString(stream);
             short composed = GetShort(stream);
             tag.Value = composed;
             return tag;
@@ -314,8 +311,8 @@ namespace MinecraftRegion.Business
 
         private static short GetShort(Stream stream)
         {
-            byte[] valueByte = new byte[4];
-            stream.Read(valueByte, 0, 4);
+            byte[] valueByte = new byte[2];
+            stream.Read(valueByte, 0, 2);
             short composed = (short)((valueByte[0] << 8) + (valueByte[1]));
             return composed;
         }
@@ -323,7 +320,7 @@ namespace MinecraftRegion.Business
         private TAG_Byte ParseTAG_Byte(Stream stream)
         {
             TAG_Byte tag = new TAG_Byte();
-            tag.Name = GetTAGName(stream);
+            tag.Name = GetString(stream);
             sbyte composed = GetSbyte(stream);
             tag.Value = composed;
             return tag;
@@ -340,7 +337,7 @@ namespace MinecraftRegion.Business
         private TAG_Compound ParseTAG_Compound(Stream stream)
         {
             TAG_Compound tag = new TAG_Compound();
-            tag.Name = GetTAGName(stream);
+            tag.Name = GetString(stream);
             BaseTAG currentChild = null;
             while (currentChild == null || !(currentChild is TAG_End))
             {
@@ -367,13 +364,13 @@ namespace MinecraftRegion.Business
             return tag;
         }
 
-        private string GetTAGName(Stream zLibStream)
+        private string GetString(Stream stream)
         {
             byte[] textLengthArray = new byte[2];
-            zLibStream.Read(textLengthArray, 0, 2);
+            stream.Read(textLengthArray, 0, 2);
             int textLength = (textLengthArray[0] << 8) + textLengthArray[1];
             byte[] textContentArray = new byte[textLength];
-            zLibStream.Read(textContentArray, 0, textLength);
+            stream.Read(textContentArray, 0, textLength);
             StringBuilder sb = new StringBuilder();
             foreach (byte c in textContentArray)
             {
