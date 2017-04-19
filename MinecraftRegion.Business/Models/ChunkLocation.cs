@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MinecraftRegion.Business.Models.Tags;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,9 @@ namespace MinecraftRegion.Business.Models
         public int Offset { get; set; }
 
         public byte SectorCount { get; set; }
+
+        public int Timestamp { get; set; }
+
+        public List<BaseTAG> Sectors { get; set; }
     }
 }

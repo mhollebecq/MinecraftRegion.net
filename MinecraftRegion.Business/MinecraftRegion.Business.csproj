@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\ChunkLocation.cs" />
+    <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Tags\NamedTAG.cs" />
     <Compile Include="Models\Tags\BaseTAG.cs" />
     <Compile Include="Models\Tags\TagType.cs" />
