@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MinecraftRegion.Business.Models.Tags
+namespace NBT.Business.Models.Tags
 {
-    class TAG_Float : NamedTAG<float>
+    public class TAG_Short : NamedTAG<short>
     {
-        public TAG_Float() : base(TagType.Float)
+        public TAG_Short():base(TagType.Short)
         {
 
         }

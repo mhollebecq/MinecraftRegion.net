@@ -1,4 +1,5 @@
 ﻿using MinecraftRegion.Business;
+using MinecraftRegion.Business.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,13 @@ namespace MinecraftRegion.TestConsole
             string regionpath = @"C:\Games\Minecraft\Serveur\Un\world\region";
             RegionReader reader = new RegionReader();
 
-            reader.Read(regionpath); 
+            foreach (Region region in reader.Read(regionpath))
+            {
+                foreach(ChunkLocation location in region.Locations)
+                {
+
+                }
+            }
         }
     }
 }

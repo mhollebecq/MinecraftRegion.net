@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MinecraftRegion.Business.Models.Tags
+namespace NBT.Business.Models.Tags
 {
     public abstract class BaseTAG
     {

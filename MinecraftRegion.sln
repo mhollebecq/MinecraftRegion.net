@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftRegion.Business", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftRegion.TestConsole", "MinecraftRegion.TestConsole\MinecraftRegion.TestConsole.csproj", "{EB4E3911-3C39-488B-B22E-6CCA26D5BA8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBT.Business", "NBT.Business\NBT.Business.csproj", "{A96D8016-AAC1-4DD7-99DF-08B488C1B955}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EB4E3911-3C39-488B-B22E-6CCA26D5BA8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB4E3911-3C39-488B-B22E-6CCA26D5BA8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB4E3911-3C39-488B-B22E-6CCA26D5BA8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A96D8016-AAC1-4DD7-99DF-08B488C1B955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A96D8016-AAC1-4DD7-99DF-08B488C1B955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A96D8016-AAC1-4DD7-99DF-08B488C1B955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A96D8016-AAC1-4DD7-99DF-08B488C1B955}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

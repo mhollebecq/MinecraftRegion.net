@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MinecraftRegion.Business.Models.Tags
+namespace NBT.Business.Models.Tags
 {
-    class TAG_ByteArray : NamedTAG<sbyte[]>
+    class TAG_IntArray : NamedTAG<int[]>
     {
-        public TAG_ByteArray() : base(TagType.ByteArray)
+        public TAG_IntArray():base(TagType.IntArray)
         {
+
         }
     }
 }

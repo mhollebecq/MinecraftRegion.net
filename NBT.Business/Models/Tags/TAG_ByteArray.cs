@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MinecraftRegion.Business.Models.Tags
+namespace NBT.Business.Models.Tags
 {
-    public class TAG_Short : NamedTAG<short>
+    class TAG_ByteArray : NamedTAG<sbyte[]>
     {
-        public TAG_Short():base(TagType.Short)
+        public TAG_ByteArray() : base(TagType.ByteArray)
         {
-
         }
     }
 }
