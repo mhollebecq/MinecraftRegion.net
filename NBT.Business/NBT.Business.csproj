@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Tags\BaseTAG.cs" />
+    <Compile Include="Models\Tags\INamedTag.cs" />
     <Compile Include="Models\Tags\NamedTAG.cs" />
     <Compile Include="Models\Tags\TagType.cs" />
     <Compile Include="Models\Tags\TAG_Byte.cs" />

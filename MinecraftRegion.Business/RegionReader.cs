@@ -24,7 +24,7 @@ namespace MinecraftRegion.Business
             }
         }
 
-        private IEnumerable<ChunkLocation> ReadOne(string file)
+        private IEnumerable<Chunk> ReadOne(string file)
         {
             using (BinaryReader binaryReader = new BinaryReader(File.OpenRead(file)))
             {
@@ -37,7 +37,7 @@ namespace MinecraftRegion.Business
                 for (int iLocation = 0; iLocation < locations.Count; iLocation++)
                 {
                     int timestamp = timeStamps[iLocation];
-                    ChunkLocation location = locations[iLocation];
+                    Chunk location = locations[iLocation];
                     location.Timestamp = timestamp;
                     binaryReader.BaseStream.Position = location.Offset * 4096;
                     byte[] headerChunk = new byte[5];
@@ -52,19 +52,19 @@ namespace MinecraftRegion.Business
                         switch (compresionType)
                         {
                             case 2:
-                                var rootTag = ParseByCompressionZLib(binaryReader);
-                                location.Sectors.Add(rootTag);
-                                yield return location;
+                                var sector = ParseByCompressionZLib(binaryReader);
+                                location.Sectors.Add(sector);
                                 break;
                             default:
                                 throw new NotImplementedException("Only compression ZLib is implemented");
                         }
                     }
+                    yield return location;
                 }
             }
         }
 
-        private BaseTAG ParseByCompressionZLib(BinaryReader binaryReader)
+        private ChunkSector ParseByCompressionZLib(BinaryReader binaryReader)
         {
             byte[] compressedChunk = new byte[4091];
             binaryReader.Read(compressedChunk, 0, 4091);
@@ -73,7 +73,9 @@ namespace MinecraftRegion.Business
                 using (Ionic.Zlib.ZlibStream zLibStream = new Ionic.Zlib.ZlibStream(mStream, Ionic.Zlib.CompressionMode.Decompress))
                 {
                     NBTReader nbtReader = new NBTReader();
-                    return nbtReader.GetTag(zLibStream);
+                    SectorReader sectorReader = new SectorReader();
+                    ChunkSector sector = sectorReader.GetSector(nbtReader.GetTag(zLibStream));
+                    return sector;
                 }
             }
         }
@@ -88,7 +90,7 @@ namespace MinecraftRegion.Business
             return timestamps;
         }
 
-        private List<ChunkLocation> ReadLocations(byte[] headerLocations)
+        private List<Chunk> ReadLocations(byte[] headerLocations)
         {
             //Location information for a chunk consists of four bytes split into two fields: the first three bytes 
             //are a (big - endian) offset in 4KiB sectors from the start of the file, 
@@ -98,14 +100,14 @@ namespace MinecraftRegion.Business
             //byte          0 1 2   3
             //description   offset  sector count
             //A chunk with an offset of 2 will begin right after the timestamps table.
-            List<ChunkLocation> locations = new List<ChunkLocation>();
+            List<Chunk> locations = new List<Chunk>();
             for (int iLocation = 0; iLocation < 4096; iLocation += 4)
             {
                 byte[] location = new byte[4] { headerLocations[iLocation], headerLocations[iLocation + 1], headerLocations[iLocation + 2], headerLocations[iLocation + 3] };
                 int offset = (location[0] << 16) + (location[1] << 8) + location[2];
                 byte sectorCount = location[3];
                 if (offset != 0 && sectorCount != 0)
-                    locations.Add(new ChunkLocation()
+                    locations.Add(new Chunk()
                     {
                         Offset = offset,
                         SectorCount = sectorCount

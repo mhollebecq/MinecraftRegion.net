@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MinecraftRegion.Business.Models
 {
-    public class ChunkLocation
+    public class Chunk
     {
         public int Offset { get; set; }
 
@@ -15,11 +15,11 @@ namespace MinecraftRegion.Business.Models
 
         public int Timestamp { get; set; }
 
-        public List<BaseTAG> Sectors { get; set; }
+        public List<ChunkSector> Sectors { get; set; }
 
-        public ChunkLocation()
+        public Chunk()
         {
-            Sectors = new List<BaseTAG>();
+            Sectors = new List<ChunkSector>();
         }
     }
 }

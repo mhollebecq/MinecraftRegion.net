@@ -12,5 +12,10 @@ namespace NBT.Business.Models.Tags
         {
             Value = new List<BaseTAG>();
         }
+
+        public override string ToString()
+        {
+            return Name ?? string.Empty;
+        }
     }
 }

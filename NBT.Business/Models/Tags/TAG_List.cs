@@ -16,5 +16,10 @@ namespace NBT.Business.Models.Tags
         {
             Value = new List<object>();
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0} - TagId : {1} - Size : {2}", Name, TagId, Size);
+        }
     }
 }

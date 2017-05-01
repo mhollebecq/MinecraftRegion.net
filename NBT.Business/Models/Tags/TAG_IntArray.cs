@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NBT.Business.Models.Tags
 {
-    class TAG_IntArray : NamedTAG<int[]>
+    public class TAG_IntArray : NamedTAG<int[]>
     {
         public TAG_IntArray():base(TagType.IntArray)
         {

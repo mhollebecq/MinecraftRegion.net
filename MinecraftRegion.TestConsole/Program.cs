@@ -17,11 +17,17 @@ namespace MinecraftRegion.TestConsole
 
             foreach (Region region in reader.Read(regionpath))
             {
-                foreach(ChunkLocation location in region.Locations)
+                Console.WriteLine("Region - x:{0} - y:{1}", region.X, region.Y);
+                foreach (Chunk location in region.Locations)
                 {
-
+                    foreach (ChunkSector sector in location.Sectors)
+                    {
+                        Console.WriteLine("Sector - x:{0} - z:{1} : ", sector.Level.XPos, sector.Level.ZPos);
+                    }
                 }
             }
+
+            Console.ReadKey();
         }
     }
 }
