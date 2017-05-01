@@ -16,5 +16,10 @@ namespace MinecraftRegion.Business.Models
         public int Timestamp { get; set; }
 
         public List<BaseTAG> Sectors { get; set; }
+
+        public ChunkLocation()
+        {
+            Sectors = new List<BaseTAG>();
+        }
     }
 }

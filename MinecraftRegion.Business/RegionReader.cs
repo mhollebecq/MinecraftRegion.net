@@ -139,10 +139,10 @@ namespace MinecraftRegion.Business
             TAG_ByteArray tag = new TAG_ByteArray();
             tag.Name = GetString(stream);
             int size = GetInt(stream);
-            tag.Values = new sbyte[size];
+            tag.Value = new sbyte[size];
             for (int i = 0; i < size; i++)
             {
-                tag.Values[i] = GetSbyte(stream);
+                tag.Value[i] = GetSbyte(stream);
             }
 
             return tag;
@@ -153,10 +153,10 @@ namespace MinecraftRegion.Business
             TAG_IntArray tag = new TAG_IntArray();
             tag.Name = GetString(stream);
             int size = GetInt(stream);
-            tag.Values = new int[size];
+            tag.Value = new int[size];
             for (int i = 0; i < size; i++)
             {
-                tag.Values[i] = GetInt(stream);
+                tag.Value[i] = GetInt(stream);
             }
 
             return tag;
@@ -197,7 +197,7 @@ namespace MinecraftRegion.Business
             list.Size = GetInt(stream);
             for (int iList = 0; iList < list.Size; iList++)
             {
-                list.Children.Add(GetSimpleValue((byte)list.TagId, stream));
+                list.Value.Add(GetSimpleValue((byte)list.TagId, stream));
             }
             return list;
         }
@@ -352,7 +352,7 @@ namespace MinecraftRegion.Business
             while (currentChild == null || !(currentChild is TAG_End))
             {
                 currentChild = GetTag(stream);
-                tag.Children.Add(currentChild);
+                tag.Value.Add(currentChild);
             }
             return tag;
         }
@@ -369,7 +369,7 @@ namespace MinecraftRegion.Business
             while (currentChild == null || !(currentChild is TAG_End))
             {
                 currentChild = GetTag(stream);
-                tag.Children.Add(currentChild);
+                tag.Value.Add(currentChild);
             }
             return tag;
         }

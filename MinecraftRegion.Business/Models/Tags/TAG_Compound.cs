@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace MinecraftRegion.Business.Models.Tags
 {
-    public class TAG_Compound : NamedTAG
+    public class TAG_Compound : NamedTAG<List<BaseTAG>>
     {
-        public override byte TagType { get { return 10; } }
-
-        public List<BaseTAG> Children { get; set; }
-
-        public TAG_Compound()
+        public TAG_Compound() : base(TagType.Compound)
         {
-            Children = new List<BaseTAG>();
+            Value = new List<BaseTAG>();
         }
     }
 }

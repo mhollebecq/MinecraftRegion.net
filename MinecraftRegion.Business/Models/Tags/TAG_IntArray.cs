@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace MinecraftRegion.Business.Models.Tags
 {
-    class TAG_IntArray : NamedTAG
+    class TAG_IntArray : NamedTAG<int[]>
     {
-        public override byte TagType { get { return 11; } }
+        public TAG_IntArray():base(TagType.IntArray)
+        {
 
-        public int[] Values { get; set; }
+        }
     }
 }

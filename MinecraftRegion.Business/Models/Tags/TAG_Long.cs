@@ -2,10 +2,12 @@
 
 namespace MinecraftRegion.Business.Models.Tags
 {
-    internal class TAG_Long : NamedTAG
+    internal class TAG_Long : NamedTAG<long>
     {
-        public override byte TagType { get { return 4; } }
 
-        public long Value { get; internal set; }
+        public TAG_Long() : base(TagType.Long)
+        {
+
+        }
     }
 }

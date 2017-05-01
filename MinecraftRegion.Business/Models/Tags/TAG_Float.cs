@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace MinecraftRegion.Business.Models.Tags
 {
-    class TAG_Float : NamedTAG
+    class TAG_Float : NamedTAG<float>
     {
-        public override byte TagType { get { return 5; } }
+        public TAG_Float() : base(TagType.Float)
+        {
 
-        public float Value { get; internal set; }
+        }
     }
 }

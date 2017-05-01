@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace MinecraftRegion.Business.Models.Tags
 {
-    class TAG_ByteArray : NamedTAG<sbyte[]>
+    public class TypedTAG<T> : BaseTAG
     {
-        public TAG_ByteArray() : base(TagType.ByteArray)
+        public T Value { get; set; }
+
+        public TypedTAG(TagType tagType):base(tagType)
         {
         }
     }

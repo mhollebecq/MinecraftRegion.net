@@ -8,6 +8,11 @@ namespace MinecraftRegion.Business.Models.Tags
 {
     public abstract class BaseTAG
     {
-        public abstract byte TagType { get; }
+        public TagType TagType { get; protected set; }
+
+        public BaseTAG(TagType tagType)
+        {
+            TagType = tagType;
+        }
     }
 }

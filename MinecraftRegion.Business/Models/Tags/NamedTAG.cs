@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace MinecraftRegion.Business.Models.Tags
 {
-    public abstract class NamedTAG : BaseTAG
+    public abstract class NamedTAG<T> : TypedTAG<T>
     {
         public string Name { get; set; }
+
+
+        public NamedTAG(TagType tagType) : base(tagType)
+        {
+
+        }
+
     }
 }
