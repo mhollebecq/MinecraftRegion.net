@@ -70,11 +70,11 @@ namespace MinecraftRegion.Business
             binaryReader.Read(compressedChunk, 0, 4091);
             using (MemoryStream mStream = new MemoryStream(compressedChunk))
             {
-                using (Ionic.Zlib.ZlibStream zLibStream = new Ionic.Zlib.ZlibStream(mStream, Ionic.Zlib.CompressionMode.Decompress))
+                using(ZLibStreamHelper zLibStream = ZLibStreamHelper.ForDecompression(mStream))
                 {
                     NBTReader nbtReader = new NBTReader();
                     SectorReader sectorReader = new SectorReader();
-                    ChunkSector sector = sectorReader.GetSector(nbtReader.GetTag(zLibStream));
+                    ChunkSector sector = sectorReader.GetSector(nbtReader.GetTag(zLibStream.BaseStream));
                     return sector;
                 }
             }
