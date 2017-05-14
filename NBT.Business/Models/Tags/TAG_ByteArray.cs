@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NBT.Business.Models.Tags
 {
-    public class TAG_ByteArray : NamedTAG<sbyte[]>
+    public class TAG_ByteArray : NamedTAG<byte[]>
     {
         public TAG_ByteArray() : base(TagType.ByteArray)
         {

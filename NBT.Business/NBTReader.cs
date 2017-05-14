@@ -69,10 +69,10 @@ namespace NBT.Business
             TAG_ByteArray tag = new TAG_ByteArray();
             tag.Name = GetString(stream);
             int size = GetInt(stream);
-            tag.Value = new sbyte[size];
+            tag.Value = new byte[size];
             for (int i = 0; i < size; i++)
             {
-                tag.Value[i] = GetSbyte(stream);
+                tag.Value[i] = GetByte(stream);
             }
 
             return tag;
@@ -271,6 +271,14 @@ namespace NBT.Business
             byte[] valueByte = new byte[1];
             stream.Read(valueByte, 0, 1);
             sbyte composed = (sbyte)valueByte[0];
+            return composed;
+        }
+
+        private static byte GetByte(Stream stream)
+        {
+            byte[] valueByte = new byte[1];
+            stream.Read(valueByte, 0, 1);
+            byte composed = valueByte[0];
             return composed;
         }
 
