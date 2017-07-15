@@ -91,7 +91,7 @@ namespace MinecraftRegion.Business
                             level.HeightMap = CheckTagType<TAG_IntArray>(baseTag).Value;
                             break;
                         case "Sections":
-                            level.Sections = CheckTagType<TAG_List>(baseTag).Value;
+                            level.Sections = GetLevelSections(CheckTagType<TAG_List>(baseTag));
                             break;
                         case "Entities":
                             level.Entities = CheckTagType<TAG_List>(baseTag).Value;
@@ -108,6 +108,58 @@ namespace MinecraftRegion.Business
                 }
             }
             return level;
+        }
+
+        private List<LevelSection> GetLevelSections(TAG_List list)
+        {
+            List<LevelSection> sections = new List<LevelSection>();
+            foreach(object elementInList in list.Value)
+            {
+                TAG_Compound coumpound = elementInList as TAG_Compound;
+                if (coumpound == null) throw new ArgumentException("Section must be stored into TAG_Coumpound");
+
+                sections.Add(GetLevelSection(coumpound));
+            }
+            return sections;
+        }
+
+        private LevelSection GetLevelSection(TAG_Compound coumpound)
+        {
+            LevelSection section = new LevelSection();
+
+            foreach (BaseTAG baseTag in coumpound.Value)
+            {
+                //Contain only named tags
+                if (baseTag is INamedTag)
+                {
+                    INamedTag namedTag = baseTag as INamedTag;
+                    switch (namedTag.Name)
+                    {
+                        case "Add":
+                            section.Add = CheckTagType<TAG_ByteArray>(baseTag).Value;
+                            break;
+                        case "BlockLight":
+                            section.BlockLight = CheckTagType<TAG_ByteArray>(baseTag).Value;
+                            break;
+                        case "Blocks":
+                            section.Blocks = CheckTagType<TAG_ByteArray>(baseTag).Value;
+                            break;
+                        case "Data":
+                            section.Data = CheckTagType<TAG_ByteArray>(baseTag).Value;
+                            break;
+                        case "SkyLight":
+                            section.SkyLight = CheckTagType<TAG_ByteArray>(baseTag).Value;
+                            break;
+                        case "Y":
+                            section.Y = CheckTagType<TAG_Byte>(baseTag).Value;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            return section;
         }
     }
 }

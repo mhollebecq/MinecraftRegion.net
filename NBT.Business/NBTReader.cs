@@ -261,7 +261,7 @@ namespace NBT.Business
         {
             TAG_Byte tag = new TAG_Byte();
             tag.Name = GetString(stream);
-            sbyte composed = GetSbyte(stream);
+            byte composed = GetByte(stream);
             tag.Value = composed;
             return tag;
         }
