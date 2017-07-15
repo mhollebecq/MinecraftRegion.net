@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Models\Chunk.cs" />
     <Compile Include="Models\Level.cs" />
+    <Compile Include="Models\LevelSection.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\ChunkSector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

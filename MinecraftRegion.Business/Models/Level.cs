@@ -9,12 +9,12 @@ namespace MinecraftRegion.Business.Models
         public int[] HeightMap { get; internal set; }
         public long InhabitedTime { get; internal set; }
         public long LastUpdate { get; internal set; }
-        public sbyte LightPopulated { get; internal set; }
-        public List<object> Sections { get; internal set; }
-        public sbyte TerrainPopuled { get; internal set; }
+        public byte LightPopulated { get; internal set; }
+        public List<LevelSection> Sections { get; internal set; }
+        public byte TerrainPopuled { get; internal set; }
         public List<object> TileEntities { get; internal set; }
         public List<object> TileTicks { get; internal set; }
-        public sbyte V { get; internal set; }
+        public byte V { get; internal set; }
         public int XPos { get; internal set; }
         public int ZPos { get; internal set; }
     }

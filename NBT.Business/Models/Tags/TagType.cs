@@ -9,7 +9,7 @@ namespace NBT.Business.Models.Tags
     public enum TagType
     {
         End = 0,
-        SByte = 1,
+        Byte = 1,
         Short = 2,
         Int = 3,
         Long = 4,

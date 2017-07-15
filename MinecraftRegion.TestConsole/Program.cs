@@ -12,9 +12,7 @@ namespace MinecraftRegion.TestConsole
     {
         static void Main(string[] args)
         {
-            string regionpath = @"C:\Users\mathi\AppData\Roaming\.minecraft\saves\Prout\region";
-            //string oneRegion = @"C:\Users\mathi\AppData\Roaming\.minecraft\saves\Prout\region\r.0.0.mca";
-            //string regionpath = @"C:\Games\Minecraft\Serveur\Un\world\region";
+            string regionpath = args[0];
             RegionReader reader = new RegionReader();
 
             foreach (Region region in reader.ReadFolder(regionpath))

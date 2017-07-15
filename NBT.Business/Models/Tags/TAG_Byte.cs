@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NBT.Business.Models.Tags
 {
-    public class TAG_Byte : NamedTAG<sbyte>
+    public class TAG_Byte : NamedTAG<byte>
     {
-        public TAG_Byte() : base(TagType.SByte)
+        public TAG_Byte() : base(TagType.Byte)
         {
         }
     }
