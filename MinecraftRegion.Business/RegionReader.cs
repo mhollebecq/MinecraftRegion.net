@@ -9,22 +9,29 @@ namespace MinecraftRegion.Business
 {
     public class RegionReader
     {
-        public IEnumerable<Region> Read(string path)
+        public IEnumerable<Region> ReadFolder(string path)
         {
             foreach (var file in System.IO.Directory.GetFiles(path, "r.*.*.mca"))
             {
-                string[] split = new FileInfo(file).Name.Split('.');
-                int x = int.Parse(split[1]);
-                int y = int.Parse(split[2]);
-                Region region = new Region();
-                region.Locations = ReadOne(file);
-                region.X = x;
-                region.Y = y;
+                Region region = ReadOneRegion(file);
                 yield return region;
             }
         }
 
-        private IEnumerable<Chunk> ReadOne(string file)
+        public Region ReadOneRegion(string file)
+        {
+            string[] split = new FileInfo(file).Name.Split('.');
+            int x = int.Parse(split[1]);
+            int y = int.Parse(split[2]);
+            Region region = new Region();
+            region.Locations = ReadOneRegionLocations(file);
+            region.X = x;
+            region.Y = y;
+            region.Path = file;
+            return region;
+        }
+
+        private IEnumerable<Chunk> ReadOneRegionLocations(string file)
         {
             using (BinaryReader binaryReader = new BinaryReader(File.OpenRead(file)))
             {
@@ -42,35 +49,33 @@ namespace MinecraftRegion.Business
                     binaryReader.BaseStream.Position = location.Offset * 4096;
                     byte[] headerChunk = new byte[5];
                     binaryReader.Read(headerChunk, 0, 5);
-                    for (int iSector = 0; iSector < location.SectorCount; iSector++)
-                    {
-                        //byte          0 1 2 3             4                   5...
-                        //description   length(in bytes)    compression type    compressed data (length - 1 bytes)
-                        int length = (headerChunk[0] << 24) + (headerChunk[1] << 16) + (headerChunk[2] << 8) + headerChunk[3];
-                        byte compresionType = headerChunk[4];
+                    //byte          0 1 2 3             4                   5...
+                    //description   length(in bytes)    compression type    compressed data (length - 1 bytes)
+                    int length = (headerChunk[0] << 24) + (headerChunk[1] << 16) + (headerChunk[2] << 8) + headerChunk[3];
+                    System.Diagnostics.Debug.WriteLine("Sectorcount : " + location.SectorCount + ". length : " + length);
+                    byte compresionType = headerChunk[4];
 
-                        switch (compresionType)
-                        {
-                            case 2:
-                                var sector = ParseByCompressionZLib(binaryReader);
-                                location.Sectors.Add(sector);
-                                break;
-                            default:
-                                throw new NotImplementedException("Only compression ZLib is implemented");
-                        }
+                    switch (compresionType)
+                    {
+                        case 2:
+                            var sector = ParseByCompressionZLib(binaryReader, length);
+                            location.Sectors.Add(sector);
+                            break;
+                        default:
+                            throw new NotImplementedException("Only compression ZLib is implemented");
                     }
                     yield return location;
                 }
             }
         }
 
-        private ChunkSector ParseByCompressionZLib(BinaryReader binaryReader)
+        private ChunkSector ParseByCompressionZLib(BinaryReader binaryReader, int length)
         {
-            byte[] compressedChunk = new byte[4091];
-            binaryReader.Read(compressedChunk, 0, 4091);
+            byte[] compressedChunk = new byte[length];
+            binaryReader.Read(compressedChunk, 0, length);
             using (MemoryStream mStream = new MemoryStream(compressedChunk))
             {
-                using(ZLibStreamHelper zLibStream = ZLibStreamHelper.ForDecompression(mStream))
+                using (ZLibStreamHelper zLibStream = ZLibStreamHelper.ForDecompression(mStream))
                 {
                     NBTReader nbtReader = new NBTReader();
                     SectorReader sectorReader = new SectorReader();
