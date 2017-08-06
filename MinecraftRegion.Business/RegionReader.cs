@@ -26,7 +26,7 @@ namespace MinecraftRegion.Business
             Region region = new Region();
             region.Locations = ReadOneRegionLocations(file);
             region.X = x;
-            region.Y = y;
+            region.Z = y;
             region.Path = file;
             return region;
         }

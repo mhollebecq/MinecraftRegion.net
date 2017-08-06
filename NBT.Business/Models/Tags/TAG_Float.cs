@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NBT.Business.Models.Tags
 {
-    class TAG_Float : NamedTAG<float>
+    public class TAG_Float : NamedTAG<float>
     {
         public TAG_Float() : base(TagType.Float)
         {

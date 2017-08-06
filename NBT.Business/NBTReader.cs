@@ -180,7 +180,7 @@ namespace NBT.Business
             int composed1 = (valueByte[0] << 24) + (valueByte[1] << 16) + (valueByte[2] << 8) + (valueByte[3]);
             stream.Read(valueByte, 0, 4);
             int composed2 = (valueByte[0] << 24) + (valueByte[1] << 16) + (valueByte[2] << 8) + (valueByte[3]);
-            return (composed1 << 32) + composed2;
+            return (composed1 * 0x100000000) + composed2;
         }
 
         private double GetDouble(Stream stream)

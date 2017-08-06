@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NBT.Business.Models.Tags
 {
-    class TAG_String : NamedTAG<string>
+    public class TAG_String : NamedTAG<string>
     {
         public TAG_String():base(TagType.String)
         {

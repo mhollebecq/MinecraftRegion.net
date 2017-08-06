@@ -9,7 +9,7 @@ namespace MinecraftRegion.Business.Models
     public class Region
     {
         public int X { get; set; }
-        public int Y { get; set; }
+        public int Z { get; set; }
 
         public IEnumerable<Chunk> Locations { get; set; }
         public string Path { get; internal set; }

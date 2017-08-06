@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BlockType.cs" />
     <Compile Include="Models\Chunk.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\LevelSection.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Models\ChunkSector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionReader.cs" />
+    <Compile Include="RegionWriter.cs" />
     <Compile Include="SectorReader.cs" />
     <Compile Include="ZLibStreamHelper.cs" />
   </ItemGroup>

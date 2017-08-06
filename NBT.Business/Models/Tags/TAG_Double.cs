@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NBT.Business.Models.Tags
 {
-    class TAG_Double : NamedTAG<double>
+    public class TAG_Double : NamedTAG<double>
     {
         public TAG_Double() : base(TagType.Double)
         {
