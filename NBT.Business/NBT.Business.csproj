@@ -64,6 +64,7 @@
     <Compile Include="Models\Tags\TAG_String.cs" />
     <Compile Include="Models\Tags\TypedTAG.cs" />
     <Compile Include="NBTReader.cs" />
+    <Compile Include="NBTWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
