@@ -15,11 +15,6 @@ namespace MinecraftRegion.Business.Models
 
         public int Timestamp { get; set; }
 
-        public List<ChunkSector> Sectors { get; set; }
-
-        public Chunk()
-        {
-            Sectors = new List<ChunkSector>();
-        }
+        public ChunkSector Sector { get; set; }
     }
 }

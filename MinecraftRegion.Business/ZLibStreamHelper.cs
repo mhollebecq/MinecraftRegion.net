@@ -22,9 +22,17 @@ namespace MinecraftRegion.Business
         {
             return new ZLibStreamHelper(stream, CompressionMode.Compress);
         }
+        public static ZLibStreamHelper ForCompression(Stream stream, bool leaveOpen)
+        {
+            return new ZLibStreamHelper(stream, CompressionMode.Compress, leaveOpen);
+        }
         private ZLibStreamHelper(Stream stream, CompressionMode mode)
         {
             innerStream = new ZlibStream(stream, mode);
+        }
+        private ZLibStreamHelper(Stream stream, CompressionMode mode, bool leaveOpen)
+        {
+            innerStream = new ZlibStream(stream, mode, leaveOpen);
         }
         public void Dispose()
         {

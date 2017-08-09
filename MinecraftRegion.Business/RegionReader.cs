@@ -52,14 +52,13 @@ namespace MinecraftRegion.Business
                     //byte          0 1 2 3             4                   5...
                     //description   length(in bytes)    compression type    compressed data (length - 1 bytes)
                     int length = (headerChunk[0] << 24) + (headerChunk[1] << 16) + (headerChunk[2] << 8) + headerChunk[3];
-                    System.Diagnostics.Debug.WriteLine("Sectorcount : " + location.SectorCount + ". length : " + length);
                     byte compresionType = headerChunk[4];
 
                     switch (compresionType)
                     {
                         case 2:
                             var sector = ParseByCompressionZLib(binaryReader, length);
-                            location.Sectors.Add(sector);
+                            location.Sector = sector ;
                             break;
                         default:
                             throw new NotImplementedException("Only compression ZLib is implemented");

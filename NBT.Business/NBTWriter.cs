@@ -272,7 +272,7 @@ namespace NBT.Business
 
         public byte[] GetBytes(TAG_Compound tag)
         {
-            int stringLength = tag.Name.Length;
+            int stringLength = !string.IsNullOrEmpty(tag.Name)? tag.Name.Length:0;
             int headerLength = 3;//1 byte for type and 2 for string length
             byte[] bytes = new byte[headerLength + stringLength];
 
