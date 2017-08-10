@@ -200,11 +200,9 @@ namespace NBT.Business
         {
             int stringLength = tag.Name.Length;
             int headerLength = 3;//1 byte for type and 2 for string length
-            int oneDataLength = GetDataLength((TagType)tag.TagId);
-            int dataLength = oneDataLength * tag.Value.Count;
             int arrayLengthLength = 4;
             int tagIdLength = 1;
-            byte[] bytes = new byte[headerLength + stringLength + tagIdLength+ dataLength + arrayLengthLength];
+            byte[] bytes = new byte[headerLength + stringLength + tagIdLength + arrayLengthLength];
 
             bytes[0] = (byte)TagType.List;
             bytes[1] = (byte)((stringLength & 0xFF00) >> 8);
@@ -223,16 +221,14 @@ namespace NBT.Business
             bytes[7 + stringLength] = numberBytes[0];
 
             var getNumberBytes = GetNumberBytes((TagType)tag.TagId);
+            IEnumerable<byte> concatenedBytes = bytes;
             for (int i = 0; i < tag.Value.Count; i++)
             {
                 byte[] numberBytesValue = getNumberBytes(tag.Value[i]);
-                for (int j = 0; j < numberBytesValue.Length; j++)
-                {
-                    bytes[8 + stringLength + oneDataLength * i + j] = numberBytesValue[numberBytesValue.Length-j-1];
-                }
+                concatenedBytes = concatenedBytes.Concat(numberBytesValue);
             }
 
-            return bytes;
+            return concatenedBytes.ToArray();
         }
 
         public Func<object, byte[]> GetNumberBytes(TagType type)
@@ -240,17 +236,17 @@ namespace NBT.Business
             switch (type)
             {
                 case TagType.End:
-                    break;
+                    return new Func<object, byte[]>((o) => { return new byte[0]; });
                 case TagType.Byte:
-                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(byte.Parse(o.ToString())); });
+                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(byte.Parse(o.ToString())).Reverse().ToArray(); });
                 case TagType.Short:
-                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(short.Parse(o.ToString())); });
+                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(short.Parse(o.ToString())).Reverse().ToArray(); });
                 case TagType.Int:
-                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(int.Parse(o.ToString())); });
+                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(int.Parse(o.ToString())).Reverse().ToArray(); });
                 case TagType.Long:
-                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(long.Parse(o.ToString())); });
+                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(long.Parse(o.ToString())).Reverse().ToArray(); });
                 case TagType.Float:
-                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(float.Parse(o.ToString())); });
+                    return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(float.Parse(o.ToString())).Reverse().ToArray(); });
                 case TagType.Double:
                     return new Func<object, byte[]>((o) => { return BitConverter.GetBytes(double.Parse(o.ToString())); });
                 case TagType.ByteArray:
@@ -335,7 +331,7 @@ namespace NBT.Business
             switch (type)
             {
                 case TagType.End:
-                    break;
+                    return 0;
                 case TagType.Byte:
                     return 1;
                 case TagType.Short:

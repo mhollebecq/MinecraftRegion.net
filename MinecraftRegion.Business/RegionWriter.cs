@@ -37,7 +37,7 @@ namespace MinecraftRegion.Business
                 List<byte[]> sectorsList = new List<byte[]>();
                 foreach (Chunk location in regionToWrite.Locations)
                 {
-                    TAG_Compound chunkTag = GetChunkTag(location);
+                    TAG_Compound chunkTag = GetChunkTag(location.Sector);
 
                     byte[] chunkBytes = nbtWriter.GetBytes(chunkTag);
                     using (MemoryStream mStream = new MemoryStream())
@@ -89,34 +89,177 @@ namespace MinecraftRegion.Business
             }
         }
 
-        private static TAG_Compound GetChunkTag(Chunk location)
+        private static TAG_Compound GetChunkTag(ChunkSector sector)
         {
             TAG_Compound chunkTag = new TAG_Compound();
             chunkTag.Value.Add(new TAG_Int()
             {
                 Name = "DataVersion",
-                Value = location.Sector.DataVersion
+                Value = sector.DataVersion
             });
-            TAG_Compound levelTag = GetLevelTag(location);
+            TAG_Compound levelTag = GetLevelTag(sector.Level);
             chunkTag.Value.Add(levelTag);
             return chunkTag;
         }
 
-        private static TAG_Compound GetLevelTag(Chunk location)
+        private static TAG_Compound GetLevelTag(Level level)
         {
             TAG_Compound levelTag = new TAG_Compound();
             levelTag.Name = "Level";
             levelTag.Value.Add(new TAG_Int()
             {
                 Name = "xPos",
-                Value = location.Sector.Level.XPos
+                Value = level.XPos
             });
             levelTag.Value.Add(new TAG_Int()
             {
                 Name = "zPos",
-                Value = location.Sector.Level.ZPos
+                Value = level.ZPos
             });
+
+            levelTag.Value.Add(new TAG_Long()
+            {
+                Name = "LastUpdate",
+                Value = level.LastUpdate
+            });
+            levelTag.Value.Add(new TAG_Byte()
+            {
+                Name = "LightPopulated",
+                Value = level.LightPopulated
+            });
+
+            levelTag.Value.Add(new TAG_Byte()
+            {
+                Name = "TerrainPopulated",
+                Value = level.TerrainPopulated
+            });
+            levelTag.Value.Add(new TAG_Byte()
+            {
+                Name = "V",
+                Value = level.V
+            });
+
+            levelTag.Value.Add(new TAG_Long()
+            {
+                Name = "InhabitedTime",
+                Value = level.InhabitedTime
+            });
+            levelTag.Value.Add(new TAG_ByteArray()
+            {
+                Name = "Biomes",
+                Value = level.Biomes
+            });
+
+            levelTag.Value.Add(new TAG_IntArray()
+            {
+                Name = "HeightMap",
+                Value = level.HeightMap
+            });
+            //if (level.Entities != null && level.Entities.Any())
+            //    levelTag.Value.Add(new TAG_List()
+            //    {
+            //        TagId = (sbyte)TagType.Compound,
+            //        Name = "Entities",
+            //        Value = GetEntitiesTags(level.Entities)
+            //    });
+            //else
+            levelTag.Value.Add(new TAG_List()
+            {
+                TagId = (sbyte)TagType.End,
+                Name = "Entities",
+                Value = new List<object>()
+            });
+
+            //if (level.Entities != null && level.Entities.Any())
+            //    levelTag.Value.Add(new TAG_List()
+            //    {
+            //        TagId = (sbyte)TagType.Compound,
+            //        Name = "TileEntities",
+            //        Value = GetTileEntitiesTags(level.TileEntities)
+            //    });
+            //else
+            levelTag.Value.Add(new TAG_List()
+            {
+                TagId = (sbyte)TagType.End,
+                Name = "TileEntities",
+                Value = new List<object>()
+            });
+
+            if (level.TileTicks != null)
+                levelTag.Value.Add(new TAG_List()
+                {
+                    TagId = (sbyte)TagType.Compound,
+                    Name = "TileTicks",
+                    Value = level.TileTicks
+                });
+
+            TAG_List leveSectionsTag = GetLevelSectionsTag(level.Sections);
+            levelTag.Value.Add(leveSectionsTag);
+
             return levelTag;
+        }
+
+        private static TAG_List GetLevelSectionsTag(List<LevelSection> sections)
+        {
+            if (sections == null) throw new ArgumentNullException("Sections must be set");
+            TAG_List sectionsTag = new TAG_List();
+            sectionsTag.Name = "Sections";
+            sectionsTag.TagId = (sbyte)TagType.Compound;
+            foreach (LevelSection section in sections)
+            {
+                sectionsTag.Value.Add(GetLevelSectionTag(section));
+            }
+            sectionsTag.Size = sectionsTag.Value.Count;
+            return sectionsTag;
+        }
+
+        private static TAG_Compound GetLevelSectionTag(LevelSection section)
+        {
+            TAG_Compound sectionTag = new TAG_Compound();
+
+            if (section.Add != null)
+                sectionTag.Value.Add(new TAG_ByteArray()
+                {
+                    Name = "Add",
+                    Value = section.Add
+                });
+            sectionTag.Value.Add(new TAG_ByteArray()
+            {
+                Name = "BlockLight",
+                Value = section.BlockLight
+            });
+            sectionTag.Value.Add(new TAG_ByteArray()
+            {
+                Name = "Blocks",
+                Value = section.Blocks
+            });
+            sectionTag.Value.Add(new TAG_ByteArray()
+            {
+                Name = "Data",
+                Value = section.Data
+            });
+            sectionTag.Value.Add(new TAG_ByteArray()
+            {
+                Name = "SkyLight",
+                Value = section.SkyLight
+            });
+            sectionTag.Value.Add(new TAG_Byte()
+            {
+                Name = "Y",
+                Value = section.Y
+            });
+
+            return sectionTag;
+        }
+
+        private static List<object> GetEntitiesTags(List<object> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static List<object> GetTileEntitiesTags(List<object> tileEntities)
+        {
+            throw new NotImplementedException();
         }
     }
 }

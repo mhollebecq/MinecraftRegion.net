@@ -76,7 +76,7 @@ namespace MinecraftRegion.Business
                             level.LightPopulated = CheckTagType<TAG_Byte>(baseTag).Value;
                             break;
                         case "TerrainPopuled":
-                            level.TerrainPopuled = CheckTagType<TAG_Byte>(baseTag).Value;
+                            level.TerrainPopulated = CheckTagType<TAG_Byte>(baseTag).Value;
                             break;
                         case "V":
                             level.V = CheckTagType<TAG_Byte>(baseTag).Value;
