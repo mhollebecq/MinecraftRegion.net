@@ -12,11 +12,12 @@ namespace MinecraftRegion.TestConsole
     {
         static void Main(string[] args)
         {
+            string oneRegion = @"C:\Users\mathi\AppData\Roaming\.minecraft\saves\Prout\region\r.-1.0.mca";
             string writeRegionPath = @"C:\Users\mathi\AppData\Roaming\.minecraft\saves\TestWorldMC\region";
             string regionpath = args[0];
             RegionReader reader = new RegionReader();
 
-            var readRegions = reader.ReadFolder(regionpath);
+            var readRegions = reader.ReadOneRegion(oneRegion);// ReadFolder(regionpath);
             //foreach (Region region in readRegions)
             //{
             //    Console.WriteLine("Region - x:{0} - y:{1}", region.X, region.Z);
@@ -37,7 +38,7 @@ namespace MinecraftRegion.TestConsole
             //}
 
             RegionWriter writer = new RegionWriter();
-            writer.WriteRegionsToFiles(writeRegionPath, readRegions);
+            writer.WriteRegionsToFiles(writeRegionPath, new List<Region>() { readRegions });
 
             var secondReadRegions = reader.ReadFolder(writeRegionPath);
             foreach (Region region in secondReadRegions)

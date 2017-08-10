@@ -28,8 +28,8 @@ namespace MinecraftRegion.Business
         {
             using (BinaryWriter binaryWriter = new BinaryWriter(stream))
             {
-                byte[] headerLocations = new byte[4096];// GetLocationsBytes(regionToWrite.Locations);
-                byte[] headerTimestamps = new byte[4096];// GetTimestampBytes(regionToWrite.Locations);
+                byte[] headerLocations = new byte[4096];
+                byte[] headerTimestamps = new byte[4096];
 
                 NBTWriter nbtWriter = new NBTWriter();
                 int total4096words = 2;
@@ -37,25 +37,7 @@ namespace MinecraftRegion.Business
                 List<byte[]> sectorsList = new List<byte[]>();
                 foreach (Chunk location in regionToWrite.Locations)
                 {
-                    TAG_Compound chunkTag = new TAG_Compound();
-                    chunkTag.Value.Add(new TAG_Int()
-                    {
-                        Name = "DataVersion",
-                        Value = location.Sector.DataVersion
-                    });
-                    TAG_Compound levelTag = new TAG_Compound();
-                    levelTag.Name = "Level";
-                    levelTag.Value.Add(new TAG_Int()
-                    {
-                        Name = "XPos",
-                        Value = location.Sector.Level.XPos
-                    });
-                    levelTag.Value.Add(new TAG_Int()
-                    {
-                        Name = "ZPos",
-                        Value = location.Sector.Level.ZPos
-                    });
-                    chunkTag.Value.Add(levelTag);
+                    TAG_Compound chunkTag = GetChunkTag(location);
 
                     byte[] chunkBytes = nbtWriter.GetBytes(chunkTag);
                     using (MemoryStream mStream = new MemoryStream())
@@ -107,42 +89,34 @@ namespace MinecraftRegion.Business
             }
         }
 
-        private byte[] GetTimestampBytes(IEnumerable<Chunk> locations)
+        private static TAG_Compound GetChunkTag(Chunk location)
         {
-            byte[] headerTimestamp = new byte[4096];
-
-            int iLocation = 0;
-
-            foreach (Chunk chunk in locations)
+            TAG_Compound chunkTag = new TAG_Compound();
+            chunkTag.Value.Add(new TAG_Int()
             {
-                headerTimestamp[iLocation] = (byte)((chunk.Timestamp & 0xFF000000) >> 24);
-                headerTimestamp[iLocation + 1] = (byte)((chunk.Timestamp & 0xFF0000) >> 16);
-                headerTimestamp[iLocation + 2] = (byte)((chunk.Timestamp & 0xFF00) >> 8);
-                headerTimestamp[iLocation + 3] = (byte)(chunk.Timestamp & 0xFF);
-
-                iLocation += 4;
-            }
-
-            return headerTimestamp;
+                Name = "DataVersion",
+                Value = location.Sector.DataVersion
+            });
+            TAG_Compound levelTag = GetLevelTag(location);
+            chunkTag.Value.Add(levelTag);
+            return chunkTag;
         }
 
-        private byte[] GetLocationsBytes(IEnumerable<Chunk> locations)
+        private static TAG_Compound GetLevelTag(Chunk location)
         {
-            byte[] headerLocations = new byte[4096];
-
-            int iLocation = 0;
-
-            foreach (Chunk chunk in locations)
+            TAG_Compound levelTag = new TAG_Compound();
+            levelTag.Name = "Level";
+            levelTag.Value.Add(new TAG_Int()
             {
-                headerLocations[iLocation] = (byte)((chunk.Offset & 0xFF0000) >> 16);
-                headerLocations[iLocation + 1] = (byte)((chunk.Offset & 0xFF00) >> 8);
-                headerLocations[iLocation + 2] = (byte)(chunk.Offset & 0xFF);
-                headerLocations[iLocation + 3] = chunk.SectorCount;
-
-                iLocation += 4;
-            }
-
-            return headerLocations;
+                Name = "xPos",
+                Value = location.Sector.Level.XPos
+            });
+            levelTag.Value.Add(new TAG_Int()
+            {
+                Name = "zPos",
+                Value = location.Sector.Level.ZPos
+            });
+            return levelTag;
         }
     }
 }
