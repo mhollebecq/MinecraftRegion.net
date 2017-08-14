@@ -45,7 +45,7 @@ namespace MinecraftRegion.Business
                         using (ZLibStreamHelper zLibStream = ZLibStreamHelper.ForCompression(mStream, true))
                         {
                             zLibStream.BaseStream.Write(chunkBytes, 0, chunkBytes.Length);
-                            zLibStream.BaseStream.Flush();
+                            //zLibStream.BaseStream.Flush();
                         }
                         int compressedDataLengthPlusHeader = (int)mStream.Length + 5;
                         int sectorCount = (int)(compressedDataLengthPlusHeader / 4046) +
