@@ -210,6 +210,76 @@ namespace NBT.Business.Tests
             }
         }
 
+        [TestMethod]
+        public void Write_TAG_List_Of_Compound()
+        {
+            TAG_List tag = new TAG_List()
+            {
+                Name = "List",
+                TagId = 10,
+                Value = new List<object>()
+                {
+                    new TAG_Compound()
+                    {
+                        Value = new List<BaseTAG>()
+                        {
+                            new TAG_ByteArray()
+                            {
+                                Name="Blocks",
+                                Value = new byte[] {1,2,3}
+                            },
+                            new TAG_ByteArray()
+                            {
+                                Name="Data",
+                                Value = new byte[] {4,5,6}
+                            },
+
+                        }
+                    },
+                    new TAG_Compound()
+                    {
+                        Value = new List<BaseTAG>()
+                        {
+                            new TAG_ByteArray()
+                            {
+                                Name="Blocks",
+                                Value = new byte[] {7,8,9}
+                            },
+                            new TAG_ByteArray()
+                            {
+                                Name="Data",
+                                Value = new byte[] {10,11,12}
+                            },
+
+                        }
+                    }
+                }
+            };
+            NBTWriter writer = new NBTWriter();
+            byte[] bytes = writer.GetBytes(tag);
+            byte[] expected = new byte[]  { 9, 0, 4, 76, 105, 115, 116,
+                10,
+                0, 0, 0, 2,
+                10, 0, 0,//First coumpound
+                    7, 0, 6, 66, 108, 111, 99, 107, 115,//Tag Byte Blocks
+                    0,0,0,3, 1, 2, 3,
+                    7, 0, 4, 68, 97, 116, 97,
+                    0,0,0,3, 4, 5, 6,
+                0,
+                10, 0, 0,//Second coumpound
+                    7, 0, 6, 66, 108, 111, 99, 107, 115,//Tag Byte Blocks
+                    0,0,0,3, 7, 8, 9,
+                    7, 0, 4, 68, 97, 116, 97,
+                    0,0,0,3, 10, 11, 12,
+                0
+            };
+            Assert.AreEqual(expected.Length, bytes.Length, "Arrays do not have same length");
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.AreEqual(expected[i], bytes[i]);
+            }
+        }
+
 
         [TestMethod]
         public void Write_TAG_Compound()

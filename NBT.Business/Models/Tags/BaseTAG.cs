@@ -8,7 +8,7 @@ namespace NBT.Business.Models.Tags
 {
     public abstract class BaseTAG
     {
-        public TagType TagType { get; protected set; }
+        public TagType TagType { get; private set; }
 
         public BaseTAG(TagType tagType)
         {
