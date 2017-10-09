@@ -260,16 +260,16 @@ namespace NBT.Business.Tests
             byte[] expected = new byte[]  { 9, 0, 4, 76, 105, 115, 116,
                 10,
                 0, 0, 0, 2,
-                10, 0, 0,//First coumpound
+                //First coumpound
                     7, 0, 6, 66, 108, 111, 99, 107, 115,//Tag Byte Blocks
                     0,0,0,3, 1, 2, 3,
-                    7, 0, 4, 68, 97, 116, 97,
+                    7, 0, 4, 68, 97, 116, 97,//Tag Byte Data
                     0,0,0,3, 4, 5, 6,
                 0,
-                10, 0, 0,//Second coumpound
+                //Second coumpound
                     7, 0, 6, 66, 108, 111, 99, 107, 115,//Tag Byte Blocks
                     0,0,0,3, 7, 8, 9,
-                    7, 0, 4, 68, 97, 116, 97,
+                    7, 0, 4, 68, 97, 116, 97,//Tag Byte Data
                     0,0,0,3, 10, 11, 12,
                 0
             };
