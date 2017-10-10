@@ -256,7 +256,7 @@ namespace NBT.Business
                 case TagType.List:
                     break;
                 case TagType.Compound:
-                    return new Func<object, byte[]>((o) => { return GetBytes((TAG_Compound)o); });
+                    return new Func<object, byte[]>((o) => { return GetPayloadBytes((TAG_Compound)o); });
                 case TagType.IntArray:
                     break;
                 default:
@@ -264,6 +264,21 @@ namespace NBT.Business
             }
 
             throw new ArgumentException("Unable to find how return byte array");
+        }
+
+        private byte[] GetPayloadBytes(TAG_Compound tag)
+        {
+            byte[] bytes = new byte[0];
+            TagType lastTag = TagType.Byte;
+            foreach (BaseTAG innerTag in tag.Value)
+            {
+                lastTag = innerTag.TagType;
+                bytes = bytes.Concat(GetBytes(innerTag)).ToArray();
+            }
+            if (lastTag != TagType.End)
+                bytes = bytes.Concat(new byte[] { 0 }).ToArray();
+
+            return bytes;
         }
 
         public byte[] GetBytes(TAG_Compound tag)
