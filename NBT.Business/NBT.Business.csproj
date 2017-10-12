@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7D891294-F15B-494E-9260-A94F0BC3B3C0}</ProjectGuid>
+    <ProjectGuid>{A96D8016-AAC1-4DD7-99DF-08B488C1B955}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MinecraftRegion.Business</RootNamespace>
-    <AssemblyName>MinecraftRegion.Business</AssemblyName>
+    <RootNamespace>NBT.Business</RootNamespace>
+    <AssemblyName>NBT.Business</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -29,11 +32,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
-      <HintPath>..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,27 +46,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlockReader.cs" />
-    <Compile Include="Models\BlockType.cs" />
-    <Compile Include="Models\Chunk.cs" />
-    <Compile Include="Models\Level.cs" />
-    <Compile Include="Models\LevelSection.cs" />
-    <Compile Include="Models\Region.cs" />
-    <Compile Include="Models\ChunkSector.cs" />
+    <Compile Include="Models\Tags\BaseTAG.cs" />
+    <Compile Include="Models\Tags\INamedTag.cs" />
+    <Compile Include="Models\Tags\NamedTAG.cs" />
+    <Compile Include="Models\Tags\TagType.cs" />
+    <Compile Include="Models\Tags\TAG_Byte.cs" />
+    <Compile Include="Models\Tags\TAG_ByteArray.cs" />
+    <Compile Include="Models\Tags\TAG_Compound.cs" />
+    <Compile Include="Models\Tags\TAG_Double.cs" />
+    <Compile Include="Models\Tags\TAG_End.cs" />
+    <Compile Include="Models\Tags\TAG_Float.cs" />
+    <Compile Include="Models\Tags\TAG_Int.cs" />
+    <Compile Include="Models\Tags\TAG_IntArray.cs" />
+    <Compile Include="Models\Tags\TAG_List.cs" />
+    <Compile Include="Models\Tags\TAG_Long.cs" />
+    <Compile Include="Models\Tags\TAG_Short.cs" />
+    <Compile Include="Models\Tags\TAG_String.cs" />
+    <Compile Include="Models\Tags\TypedTAG.cs" />
+    <Compile Include="NBTReader.cs" />
+    <Compile Include="NBTWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegionReader.cs" />
-    <Compile Include="RegionWriter.cs" />
-    <Compile Include="SectorReader.cs" />
-    <Compile Include="ZLibStreamHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NBT.Business\NBT.Business.csproj">
-      <Project>{a96d8016-aac1-4dd7-99df-08b488c1b955}</Project>
-      <Name>NBT.Business</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

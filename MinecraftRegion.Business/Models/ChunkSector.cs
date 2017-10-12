@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MinecraftRegion.Business.Models
 {
-    public class ChunkLocation
+    public class ChunkSector
     {
-        public int Offset { get; set; }
+        public int DataVersion { get; set; }
 
-        public byte SectorCount { get; set; }
+        public Level Level { get; set; }
     }
 }
