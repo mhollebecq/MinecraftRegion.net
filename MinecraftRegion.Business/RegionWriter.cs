@@ -33,10 +33,11 @@ namespace MinecraftRegion.Business
 
                 NBTWriter nbtWriter = new NBTWriter();
                 int total4096words = 2;
-                int iLocationAndTimestamp = 0;
                 List<byte[]> sectorsList = new List<byte[]>();
+                System.Diagnostics.Debug.WriteLine("Location count: " + regionToWrite.Locations.Count());
                 foreach (Chunk location in regionToWrite.Locations)
                 {
+                    System.Diagnostics.Debug.WriteLine("Chunk X: " + location.Sector.Level.XPos+ " Z: "+ location.Sector.Level.ZPos);
                     TAG_Compound chunkTag = GetChunkTag(location.Sector);
 
                     byte[] chunkBytes = nbtWriter.GetBytes(chunkTag);
@@ -51,6 +52,7 @@ namespace MinecraftRegion.Business
                         int sectorCount = (int)(compressedDataLengthPlusHeader / 4046) +
                             (compressedDataLengthPlusHeader % 4096 == 0 ? 0 : 1);
 
+                        int iLocationAndTimestamp = 4 * ((location.Sector.Level.XPos & 31) + (location.Sector.Level.ZPos & 31) * 32);
                         headerLocations[iLocationAndTimestamp] = (byte)((total4096words & 0xFF0000) >> 16);
                         headerLocations[iLocationAndTimestamp + 1] = (byte)((total4096words & 0xFF00) >> 8);
                         headerLocations[iLocationAndTimestamp + 2] = (byte)((total4096words & 0xFF) >> 0);
@@ -73,7 +75,6 @@ namespace MinecraftRegion.Business
                             (int)mStream.Length);
                         sectorsList.Add(sectorBytes);
                         total4096words += sectorCount;
-                        iLocationAndTimestamp += 4;
                     }
                 }
                 binaryWriter.Write(headerLocations);

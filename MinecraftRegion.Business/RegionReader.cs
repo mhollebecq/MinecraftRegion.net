@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using NBT.Business.Models.Tags;
 using NBT.Business;
+using System.Diagnostics;
 
 namespace MinecraftRegion.Business
 {
@@ -59,6 +60,8 @@ namespace MinecraftRegion.Business
                         case 2:
                             var sector = ParseByCompressionZLib(binaryReader, length);
                             location.Sector = sector ;
+                            int x = sector.Level.XPos, z = sector.Level.ZPos;
+                            Debug.WriteLine($"{location.Offset} {x} {z} {(4 * ((x & 31) + (z & 31) * 32))}");
                             break;
                         default:
                             throw new NotImplementedException("Only compression ZLib is implemented");
