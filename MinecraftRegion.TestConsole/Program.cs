@@ -19,10 +19,15 @@ namespace MinecraftRegion.TestConsole
             var readRegions = reader.ReadFolder(regionpath);
 
 
-            RegionWriter writer = new RegionWriter();
-            writer.WriteRegionsToFiles(writeRegionPath, readRegions);
+            //RegionWriter writer = new RegionWriter();
+            //writer.WriteRegionsToFiles(writeRegionPath, readRegions);
 
-
+            BlockReader blockReader = new BlockReader();
+            foreach (Region region in readRegions)
+            {
+                blockReader.ReadBlocks(region);
+                
+            }
             Console.ReadKey();
         }
     }

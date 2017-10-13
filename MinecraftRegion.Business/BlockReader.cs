@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MinecraftRegion.Business.Models.BlockTypes;
 
 namespace MinecraftRegion.Business
 {
@@ -20,8 +21,8 @@ namespace MinecraftRegion.Business
         {
             foreach (var chunk in region.Locations)
             {
-                int xChunkInWorld = region.X + chunk.Sector.Level.XPos;
-                int zChunkInWorld = region.Z + chunk.Sector.Level.ZPos;
+                int xChunkInWorld = region.X * 32 + chunk.Sector.Level.XPos;
+                int zChunkInWorld = region.Z * 32 + chunk.Sector.Level.ZPos;
                 var sections = chunk.Sector.Level.Sections;
                 foreach (var section in sections)
                 {
@@ -33,12 +34,12 @@ namespace MinecraftRegion.Business
                         int zWorld = zChunkInWorld * 16 + zSection;
                         int yWorld = (blockPos / 256) % 16;
                         byte BlockID_a = section.Blocks[blockPos];
-                        byte BlockID_b = Nibble4(section.Add, blockPos);
+                        byte BlockID_b = section.Add!=null? Nibble4(section.Add, blockPos):(byte)0;
                         short BlockID = (short)(BlockID_a + (BlockID_b << 8));
-                        byte BlockData = Nibble4(section.Data, blockPos);
-                        byte Blocklight = Nibble4(section.BlockLight, blockPos);
-                        byte Skylight = Nibble4(section.SkyLight, blockPos);
-
+                        //byte BlockData = Nibble4(section.Data, blockPos);
+                        //byte Blocklight = Nibble4(section.BlockLight, blockPos);
+                        //byte Skylight = Nibble4(section.SkyLight, blockPos);
+                        BlockType blockType = BlockType.GetBlock(BlockID_a, BlockID_b);
                     }
                 }
             }
