@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static MinecraftRegion.Business.Models.BlockTypes;
 
 namespace MinecraftRegion.Business
 {
@@ -19,6 +18,7 @@ namespace MinecraftRegion.Business
 
         public void ReadBlocks(Region region)
         {
+            List<Block> blocks = new List<Block>();
             foreach (var chunk in region.Locations)
             {
                 int xChunkInWorld = region.X * 32 + chunk.Sector.Level.XPos;
@@ -39,7 +39,19 @@ namespace MinecraftRegion.Business
                         //byte BlockData = Nibble4(section.Data, blockPos);
                         //byte Blocklight = Nibble4(section.BlockLight, blockPos);
                         //byte Skylight = Nibble4(section.SkyLight, blockPos);
-                        BlockType blockType = BlockType.GetBlock(BlockID_a, BlockID_b);
+                        BlockType blockType = BlockTypes.GetBlock(BlockID_a, BlockID_b);
+                        blocks.Add(new Block()
+                        {
+                            BlockID = BlockID,
+                            BlockID_a = BlockID_a,
+                            BlockID_b = BlockID_b,
+                            BlockType = blockType,
+                            XSection = xSection,
+                            XWorld = xWorld,
+                            YWorld = yWorld,
+                            ZSection = zSection,
+                            ZWorld =zWorld
+                        });
                     }
                 }
             }
