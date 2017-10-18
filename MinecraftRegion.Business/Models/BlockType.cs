@@ -9,37 +9,88 @@ namespace MinecraftRegion.Business.Models
     public static class BlockTypes
     {
         public static BlockType Air { get { return new BlockType(0, 0, "minecraft:air"); } }
-        public static BlockType Andesite { get { return new BlockType(1, 5, "minecraft:stone"); } }
-        public static BlockType Bedrock { get { return new BlockType(7, 0, "minecraft:bedrock"); } }
-        public static BlockType CoarseDirt { get { return new BlockType(3, 1, "minecraft:dirt"); } }
-        public static BlockType Diorite { get { return new BlockType(1, 3, "minecraft:stone"); } }
-        public static BlockType Dirt { get { return new BlockType(3, 0, "minecraft:dirt"); } }
-        public static BlockType Granite { get { return new BlockType(1, 1, "minecraft:stone"); } }
-        public static BlockType Grass { get { return new BlockType(2, 0, "minecraft:grass"); } }
-        public static BlockType Podzol { get { return new BlockType(3, 2, "minecraft:dirt"); } }
-        public static BlockType PolishedAndesite { get { return new BlockType(1, 6, "minecraft:stone"); } }
-        public static BlockType PolishedDiorite { get { return new BlockType(1, 4, "minecraft:stone"); } }
-        public static BlockType PolishedGranite { get { return new BlockType(1, 2, "minecraft:stone"); } }
-        public static BlockType RedstoneOre { get { return new BlockType(73, 0, "minecraft:redstone_ore"); } }
         public static BlockType Stone { get { return new BlockType(1, 0, "minecraft:stone"); } }
+        public static BlockType Granite { get { return new BlockType(1, 1, "minecraft:stone"); } }
+        public static BlockType PolishedGranite { get { return new BlockType(1, 2, "minecraft:stone"); } }
+        public static BlockType Diorite { get { return new BlockType(1, 3, "minecraft:stone"); } }
+        public static BlockType PolishedDiorite { get { return new BlockType(1, 4, "minecraft:stone"); } }
+        public static BlockType Andesite { get { return new BlockType(1, 5, "minecraft:stone"); } }
+        public static BlockType PolishedAndesite { get { return new BlockType(1, 6, "minecraft:stone"); } }
+        public static BlockType Grass { get { return new BlockType(2, 0, "minecraft:grass"); } }
+        public static BlockType Dirt { get { return new BlockType(3, 0, "minecraft:dirt"); } }
+        public static BlockType Podzol { get { return new BlockType(3, 2, "minecraft:dirt"); } }
+        public static BlockType CoarseDirt { get { return new BlockType(3, 1, "minecraft:dirt"); } }
+        public static BlockType Cobblestone { get { return new BlockType(4,0, "minecraft:cobblestone"); } }
+        public static BlockType OakWoodPlanks { get { return new BlockType(5,0, "minecraft:planks"); } }
+        public static BlockType SpruceWoodPlanks { get { return new BlockType(5,1, "minecraft:planks"); } }
+        public static BlockType BirchWoodPlanks { get { return new BlockType(5,2, "minecraft:planks"); } }
+        public static BlockType JungleWoodPlanks { get { return new BlockType(5,3, "minecraft:planks"); } }
+        public static BlockType AcaciaWoodPlanks { get { return new BlockType(5,4, "minecraft:planks"); } }
+        public static BlockType DarkOakWoodPlanks { get { return new BlockType(5,5, "minecraft:planks"); } }
+        public static BlockType OakSapling { get { return new BlockType(6,0, "minecraft:sapling"); } }
+        public static BlockType SpruceSapling { get { return new BlockType(6, 1, "minecraft:planks"); } }
+        public static BlockType BirchSapling { get { return new BlockType(6, 2, "minecraft:planks"); } }
+        public static BlockType JungleSapling { get { return new BlockType(6, 3, "minecraft:planks"); } }
+        public static BlockType AcaciaSapling { get { return new BlockType(6, 4, "minecraft:planks"); } }
+        public static BlockType DarkOakSapling { get { return new BlockType(6, 5, "minecraft:planks"); } }
+        public static BlockType Bedrock { get { return new BlockType(7, 0, "minecraft:bedrock"); } }
+        public static BlockType Water { get { return new BlockType(8, 0, "minecraft:flowing_water"); } }
+        public static BlockType StationaryWater { get { return new BlockType(9, 0, "minecraft:water"); } }
+        public static BlockType Lava { get { return new BlockType(10, 0, "minecraft:flowing_lava"); } }
+        public static BlockType StationaryLava { get { return new BlockType(11, 0, "minecraft:lava"); } }
+        public static BlockType Sand { get { return new BlockType(12, 0, "minecraft:sand"); } }
+        public static BlockType RedSand { get { return new BlockType(12, 1, "minecraft:sand"); } }
+        public static BlockType Gravel { get { return new BlockType(13, 0, "minecraft:gravel"); } }
+        public static BlockType GoldOre { get { return new BlockType(14, 0, "minecraft:gold_ore"); } }
+        public static BlockType IronOre { get { return new BlockType(15, 0, "minecraft:iron_ore"); } }
+        public static BlockType CoalOre { get { return new BlockType(16, 0, "minecraft:coal_ore"); } }
+        public static BlockType LapisLazuliOre { get { return new BlockType(21, 0, "minecraft:lapis_ore"); } }
+        public static BlockType DiamondOre { get { return new BlockType(56, 0, "minecraft:diamond_ore"); } }
+        public static BlockType RedstoneOre { get { return new BlockType(73, 0, "minecraft:redstone_ore"); } }
+        
 
         static BlockTypes()
         {
             OfficialBlocks = new BlockType[]{
+                AcaciaWoodPlanks,
+                AcaciaSapling,
                 Air,
                 Andesite,
                 Bedrock,
+                BirchWoodPlanks,
+                BirchSapling,
+                CoalOre,
+                Cobblestone,
+                DiamondOre,
                 Diorite,
                 CoarseDirt,
+                DarkOakWoodPlanks,
+                DarkOakSapling,
                 Dirt,
+                GoldOre,
                 Granite,
                 Grass,
+                Gravel,
+                IronOre,
+                JungleWoodPlanks,
+                JungleSapling,
+                LapisLazuliOre,
+                Lava,
+                OakWoodPlanks,
+                OakSapling,
                 Podzol,
                 PolishedAndesite,
                 PolishedDiorite,
                 PolishedGranite,
+                RedSand,
                 RedstoneOre,
-                Stone
+                Sand,
+                SpruceWoodPlanks,
+                SpruceSapling,
+                StationaryLava,
+                StationaryWater,
+                Stone,
+                Water
             };
             //OfficialBlocks.Add
         }
