@@ -32,7 +32,7 @@ namespace MinecraftRegion.Business
                         int xWorld = xChunkInWorld * 16 + xSection;
                         int zSection = (blockPos / 16) % 16;
                         int zWorld = zChunkInWorld * 16 + zSection;
-                        int yWorld = (blockPos / 256) % 16;
+                        int yWorld = (blockPos / 256) + 16 * section.Y ;
                         byte BlockID_a = section.Blocks[blockPos];
                         byte BlockID_b = section.Add!=null? Nibble4(section.Add, blockPos):(byte)0;
                         short BlockID = (short)(BlockID_a + (BlockID_b << 8));

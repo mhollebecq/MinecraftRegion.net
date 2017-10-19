@@ -16,7 +16,7 @@ namespace MinecraftRegion.Business.Models
         public static BlockType PolishedDiorite { get { return new BlockType(1, 4, "minecraft:stone"); } }
         public static BlockType Andesite { get { return new BlockType(1, 5, "minecraft:stone"); } }
         public static BlockType PolishedAndesite { get { return new BlockType(1, 6, "minecraft:stone"); } }
-        public static BlockType Grass { get { return new BlockType(2, 0, "minecraft:grass"); } }
+        public static BlockType GrassBlock { get { return new BlockType(2, 0, "minecraft:grass"); } }
         public static BlockType Dirt { get { return new BlockType(3, 0, "minecraft:dirt"); } }
         public static BlockType Podzol { get { return new BlockType(3, 2, "minecraft:dirt"); } }
         public static BlockType CoarseDirt { get { return new BlockType(3, 1, "minecraft:dirt"); } }
@@ -44,10 +44,22 @@ namespace MinecraftRegion.Business.Models
         public static BlockType GoldOre { get { return new BlockType(14, 0, "minecraft:gold_ore"); } }
         public static BlockType IronOre { get { return new BlockType(15, 0, "minecraft:iron_ore"); } }
         public static BlockType CoalOre { get { return new BlockType(16, 0, "minecraft:coal_ore"); } }
+        public static BlockType OakWood { get { return new BlockType(17, 0, "minecraft:log"); } }
+        public static BlockType SpruceWood { get { return new BlockType(17, 1, "minecraft:log"); } }
+        public static BlockType BirchWood { get { return new BlockType(17, 2, "minecraft:log"); } }
+        public static BlockType JungleWood { get { return new BlockType(17, 3, "minecraft:log"); } }
+        public static BlockType Leaves { get { return new BlockType(18, 0, "minecraft:leaves"); } }
         public static BlockType LapisLazuliOre { get { return new BlockType(21, 0, "minecraft:lapis_ore"); } }
+        public static BlockType Grass { get { return new BlockType(31, 0, "minecraft:tallgrass"); } }
+        public static BlockType Dandelion { get { return new BlockType(37, 0, "minecraft:yellow_flower"); } }
+        public static BlockType Poppy { get { return new BlockType(38, 0, "minecraft:red_flower"); } }
+        public static BlockType BrownMushroom { get { return new BlockType(39, 0, "minecraft:brown_mushroom"); } }
+        public static BlockType RedMushroom { get { return new BlockType(40, 0, "minecraft:red_mushroom"); } }
+        public static BlockType Obsidian { get { return new BlockType(49, 0, "minecraft:obsidian"); } }
         public static BlockType DiamondOre { get { return new BlockType(56, 0, "minecraft:diamond_ore"); } }
         public static BlockType RedstoneOre { get { return new BlockType(73, 0, "minecraft:redstone_ore"); } }
-        
+        public static BlockType LargeFlowers { get { return new BlockType(175, 0, "minecraft:double_plant"); } }
+
 
         static BlockTypes()
         {
@@ -57,10 +69,13 @@ namespace MinecraftRegion.Business.Models
                 Air,
                 Andesite,
                 Bedrock,
+                BirchWood,
                 BirchWoodPlanks,
                 BirchSapling,
+                BrownMushroom,
                 CoalOre,
                 Cobblestone,
+                Dandelion,
                 DiamondOre,
                 Diorite,
                 CoarseDirt,
@@ -70,21 +85,30 @@ namespace MinecraftRegion.Business.Models
                 GoldOre,
                 Granite,
                 Grass,
+                GrassBlock,
                 Gravel,
                 IronOre,
+                JungleWood,
                 JungleWoodPlanks,
                 JungleSapling,
                 LapisLazuliOre,
+                LargeFlowers,
                 Lava,
+                Leaves,
+                OakWood,
                 OakWoodPlanks,
                 OakSapling,
+                Obsidian,
                 Podzol,
                 PolishedAndesite,
                 PolishedDiorite,
                 PolishedGranite,
+                Poppy,
+                RedMushroom,
                 RedSand,
                 RedstoneOre,
                 Sand,
+                SpruceWood,
                 SpruceWoodPlanks,
                 SpruceSapling,
                 StationaryLava,
@@ -99,7 +123,7 @@ namespace MinecraftRegion.Business.Models
 
         public static BlockType GetBlock(byte value, byte add)
         {
-            return OfficialBlocks.First(b => b.Value == value && b.Add == add);
+            return OfficialBlocks.First(b => b.Value == value /*&& b.Add == add*/);
         }
     }
 
