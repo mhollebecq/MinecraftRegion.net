@@ -55,9 +55,18 @@ namespace MinecraftRegion.Business.Models
         public static BlockType Poppy { get { return new BlockType(38, 0, "minecraft:red_flower"); } }
         public static BlockType BrownMushroom { get { return new BlockType(39, 0, "minecraft:brown_mushroom"); } }
         public static BlockType RedMushroom { get { return new BlockType(40, 0, "minecraft:red_mushroom"); } }
+        public static BlockType MossStone { get { return new BlockType(48, 0, "minecraft:mossy_cobblestone"); } }
         public static BlockType Obsidian { get { return new BlockType(49, 0, "minecraft:obsidian"); } }
+        public static BlockType MonsterSpawner { get { return new BlockType(52, 0, "minecraft:mob_spawner"); } }
+        public static BlockType Chest { get { return new BlockType(54, 0, "minecraft:chest"); } }
         public static BlockType DiamondOre { get { return new BlockType(56, 0, "minecraft:diamond_ore"); } }
         public static BlockType RedstoneOre { get { return new BlockType(73, 0, "minecraft:redstone_ore"); } }
+        public static BlockType SnowLayer { get { return new BlockType(78, 0, "minecraft:snow_layer"); } }
+        public static BlockType Clay { get { return new BlockType(82, 0, "minecraft:clay"); } }
+        public static BlockType SugarCane { get { return new BlockType(83, 0, "minecraft:reeds"); } }
+        public static BlockType Pumpkin { get { return new BlockType(86, 0, "minecraft:pumpkin"); } }
+        public static BlockType MonsterEgg { get { return new BlockType(97, 0, "minecraft:monster_egg"); } }
+        public static BlockType EmeraldOre { get { return new BlockType(129, 0, "minecraft:emerald_ore"); } }
         public static BlockType LargeFlowers { get { return new BlockType(175, 0, "minecraft:double_plant"); } }
 
 
@@ -73,6 +82,8 @@ namespace MinecraftRegion.Business.Models
                 BirchWoodPlanks,
                 BirchSapling,
                 BrownMushroom,
+                Chest,
+                Clay,
                 CoalOre,
                 Cobblestone,
                 Dandelion,
@@ -81,6 +92,7 @@ namespace MinecraftRegion.Business.Models
                 CoarseDirt,
                 DarkOakWoodPlanks,
                 DarkOakSapling,
+                EmeraldOre,
                 Dirt,
                 GoldOre,
                 Granite,
@@ -95,6 +107,9 @@ namespace MinecraftRegion.Business.Models
                 LargeFlowers,
                 Lava,
                 Leaves,
+                MonsterEgg,
+                MonsterSpawner,
+                MossStone,
                 OakWood,
                 OakWoodPlanks,
                 OakSapling,
@@ -104,15 +119,18 @@ namespace MinecraftRegion.Business.Models
                 PolishedDiorite,
                 PolishedGranite,
                 Poppy,
+                Pumpkin,
                 RedMushroom,
                 RedSand,
                 RedstoneOre,
                 Sand,
+                SnowLayer,
                 SpruceWood,
                 SpruceWoodPlanks,
                 SpruceSapling,
                 StationaryLava,
                 StationaryWater,
+                SugarCane,
                 Stone,
                 Water
             };
