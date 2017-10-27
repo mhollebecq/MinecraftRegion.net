@@ -11,7 +11,7 @@ namespace MinecraftRegion.Business.Models
         public int X { get; set; }
         public int Z { get; set; }
 
-        public IEnumerable<Chunk> Locations { get; set; }
+        public List<Chunk> Locations { get; set; }
         public string Path { get; internal set; }
     }
 }

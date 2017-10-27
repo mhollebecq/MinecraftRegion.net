@@ -16,7 +16,7 @@ namespace MinecraftRegion.Business
                 : (byte)((arr[index / 2] >> 4) & 0x0F);
         }
 
-        public void ReadBlocks(Region region)
+        public List<Block> ReadBlocks(Region region)
         {
             List<Block> blocks = new List<Block>();
             foreach (var chunk in region.Locations)
@@ -32,9 +32,9 @@ namespace MinecraftRegion.Business
                         int xWorld = xChunkInWorld * 16 + xSection;
                         int zSection = (blockPos / 16) % 16;
                         int zWorld = zChunkInWorld * 16 + zSection;
-                        int yWorld = (blockPos / 256) + 16 * section.Y ;
+                        int yWorld = (blockPos / 256) + 16 * section.Y;
                         byte BlockID_a = section.Blocks[blockPos];
-                        byte BlockID_b = section.Add!=null? Nibble4(section.Add, blockPos):(byte)0;
+                        byte BlockID_b = section.Add != null ? Nibble4(section.Add, blockPos) : (byte)0;
                         short BlockID = (short)(BlockID_a + (BlockID_b << 8));
                         //byte BlockData = Nibble4(section.Data, blockPos);
                         //byte Blocklight = Nibble4(section.BlockLight, blockPos);
@@ -50,11 +50,24 @@ namespace MinecraftRegion.Business
                             XWorld = xWorld,
                             YWorld = yWorld,
                             ZSection = zSection,
-                            ZWorld =zWorld
+                            ZWorld = zWorld
                         });
                     }
                 }
             }
+            return blocks;
+        }
+
+        public List<Block> ReadBlocks(IEnumerable<Region> regions)
+        {
+            List<Block> blocks = new List<Block>();
+
+            foreach(Region region in regions)
+            {
+                blocks.AddRange(ReadBlocks(region));
+            }
+
+            return blocks;
         }
     }
 }

@@ -8,6 +8,12 @@ namespace MinecraftRegion.Business.Models
 {
     public class LevelSection
     {
+        public Guid Guid { get; }
+
+        public LevelSection()
+        {
+            Guid = Guid.NewGuid();
+        }
 
         //       Sections: List of Compound tags, each tag is a sub-chunk of sorts.
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using NBT.Business.Models.Tags;
 using NBT.Business;
+using System.Linq;
 using System.Diagnostics;
 
 namespace MinecraftRegion.Business
@@ -25,7 +26,7 @@ namespace MinecraftRegion.Business
             int x = int.Parse(split[1]);
             int y = int.Parse(split[2]);
             Region region = new Region();
-            region.Locations = ReadOneRegionLocations(file);
+            region.Locations = ReadOneRegionLocations(file).ToList();
             region.X = x;
             region.Z = y;
             region.Path = file;
