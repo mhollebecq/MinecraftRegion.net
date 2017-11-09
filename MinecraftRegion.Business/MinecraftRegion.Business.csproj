@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockReader.cs" />
+    <Compile Include="BlockWriter.cs" />
     <Compile Include="Models\AddHandlers\DefaultAddHandler.cs" />
     <Compile Include="Models\Block.cs" />
     <Compile Include="Models\BlockType.cs" />
