@@ -12,7 +12,7 @@ namespace MinecraftRegion.Business.Models
         public byte LightPopulated { get; internal set; }
         public List<LevelSection> Sections { get; internal set; }
         public byte TerrainPopulated { get; internal set; }
-        public List<object> TileEntities { get; internal set; }
+        public List<BlockEntity> TileEntities { get; internal set; }
         public List<object> TileTicks { get; internal set; }
         public byte V { get; internal set; }
         public int XPos { get; internal set; }

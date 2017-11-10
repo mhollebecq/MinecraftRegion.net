@@ -97,7 +97,7 @@ namespace MinecraftRegion.Business
                             level.Entities = CheckTagType<TAG_List>(baseTag).Value;
                             break;
                         case "TileEntities":
-                            level.TileEntities = CheckTagType<TAG_List>(baseTag).Value;
+                            level.TileEntities = GetBlockEntities( CheckTagType<TAG_List>(baseTag));
                             break;
                         case "TileTicks":
                             level.TileTicks = CheckTagType<TAG_List>(baseTag).Value;
@@ -108,6 +108,26 @@ namespace MinecraftRegion.Business
                 }
             }
             return level;
+        }
+
+        private List<BlockEntity> GetBlockEntities(TAG_List value)
+        {
+            List<BlockEntity> entities = new List<BlockEntity>();
+            foreach (TAG_Compound compound in value.Value)
+            {
+                foreach (BaseTAG baseTag in compound.Value)
+                {
+                    BlockEntity entity = new BlockEntity();
+                    INamedTag namedTag = baseTag as INamedTag;
+                    switch (namedTag.Name)
+                    {
+                        case "id":
+                            entity.Id = CheckTagType<TAG_String>(baseTag).Value;
+                            break;
+                    }
+                }
+            }
+            return entities;
         }
 
         private List<LevelSection> GetLevelSections(TAG_List list)
