@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MinecraftRegion.Business.Models
+namespace MinecraftRegion.Business.Models.BlockEntities
 {
-    public class BlockEntity
+    public abstract class BlockEntity
     {
         public string Id { get; set; }
         public int X { get; set; }

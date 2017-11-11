@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MinecraftRegion.Business.Models.BlockEntities;
+using System.Collections.Generic;
 
 namespace MinecraftRegion.Business.Models
 {

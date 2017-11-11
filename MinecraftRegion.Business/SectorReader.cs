@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MinecraftRegion.Business.Models;
 using NBT.Business.Models.Tags;
+using MinecraftRegion.Business.Models.BlockEntities;
 
 namespace MinecraftRegion.Business
 {
@@ -115,19 +116,41 @@ namespace MinecraftRegion.Business
             List<BlockEntity> entities = new List<BlockEntity>();
             foreach (TAG_Compound compound in value.Value)
             {
-                foreach (BaseTAG baseTag in compound.Value)
+                //We search id
+                BaseTAG idTag = compound.Value.FirstOrDefault(t => (t as INamedTag).Name == "id");
+                if(idTag!=null)
                 {
-                    BlockEntity entity = new BlockEntity();
-                    INamedTag namedTag = baseTag as INamedTag;
-                    switch (namedTag.Name)
+                    string idTagValue = CheckTagType<TAG_String>(idTag).Value;
+                    switch (idTagValue)
                     {
-                        case "id":
-                            entity.Id = CheckTagType<TAG_String>(baseTag).Value;
+                        case "minecraft:sign":
+                            entities.Add(GetSignEntity(compound));
+                            break;
+                        default:
                             break;
                     }
                 }
             }
             return entities;
+        }
+
+        private BlockEntity GetSignEntity(TAG_Compound compound)
+        {
+            SignEntity sign = new SignEntity();
+            SetBaseEntityParameters(sign, compound);
+            sign.Text1 = CheckTagType<TAG_String>(compound.Value.First(b => (b as INamedTag).Name == "Text1")).Value;
+            sign.Text2 = CheckTagType<TAG_String>(compound.Value.First(b => (b as INamedTag).Name == "Text2")).Value;
+            sign.Text3 = CheckTagType<TAG_String>(compound.Value.First(b => (b as INamedTag).Name == "Text3")).Value;
+            sign.Text4 = CheckTagType<TAG_String>(compound.Value.First(b => (b as INamedTag).Name == "Text4")).Value;
+            return sign;
+        }
+
+        private void SetBaseEntityParameters(BlockEntity entity, TAG_Compound compound)
+        {
+            entity.Id = CheckTagType<TAG_String>(compound.Value.First(b => (b as INamedTag).Name == "id")).Value;
+            entity.X = CheckTagType<TAG_Int>(compound.Value.First(b => (b as INamedTag).Name == "x")).Value;
+            entity.Y = CheckTagType<TAG_Int>(compound.Value.First(b => (b as INamedTag).Name == "y")).Value;
+            entity.Z = CheckTagType<TAG_Int>(compound.Value.First(b => (b as INamedTag).Name == "z")).Value;
         }
 
         private List<LevelSection> GetLevelSections(TAG_List list)
