@@ -62,6 +62,7 @@ namespace MinecraftRegion.Business
                     currentChunk.Sector.Level = new Level();
                     currentChunk.Sector.Level.Biomes = new byte[256];
                     currentChunk.Sector.Level.Entities = new List<object>();
+                    currentChunk.Sector.Level.TileEntities = new List<Models.BlockEntities.BlockEntity>();
                     currentChunk.Sector.Level.HeightMap = new int[256];
                     currentChunk.Sector.Level.V = 1;
                     currentChunk.Sector.Level.XPos = lvlXpos;
@@ -85,6 +86,11 @@ namespace MinecraftRegion.Business
 
                 int blockPos = 256 * yInSection + 16 * zInSection + xInSection;
                 currentSection.Blocks[blockPos] = block.BlockType.Value;
+
+                if (block.BlockEntity != null)
+                {
+                    currentChunk.Sector.Level.TileEntities.Add(block.BlockEntity);
+                }
             }
 
             return regions;

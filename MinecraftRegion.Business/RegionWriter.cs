@@ -1,4 +1,5 @@
 ﻿using MinecraftRegion.Business.Models;
+using MinecraftRegion.Business.Models.BlockEntities;
 using NBT.Business;
 using NBT.Business.Models.Tags;
 using System;
@@ -171,20 +172,20 @@ namespace MinecraftRegion.Business
                 Value = new List<object>()
             });
 
-            //if (level.Entities != null && level.Entities.Any())
-            //    levelTag.Value.Add(new TAG_List()
-            //    {
-            //        TagId = (sbyte)TagType.Compound,
-            //        Name = "TileEntities",
-            //        Value = GetTileEntitiesTags(level.TileEntities)
-            //    });
-            //else
-            levelTag.Value.Add(new TAG_List()
-            {
-                TagId = (sbyte)TagType.End,
-                Name = "TileEntities",
-                Value = new List<object>()
-            });
+            if (level.TileEntities != null && level.TileEntities.Any())
+                levelTag.Value.Add(new TAG_List()
+                {
+                    TagId = (sbyte)TagType.Compound,
+                    Name = "TileEntities",
+                    Value = GetTileEntitiesTags(level.TileEntities)
+                });
+            else
+                levelTag.Value.Add(new TAG_List()
+                {
+                    TagId = (sbyte)TagType.End,
+                    Name = "TileEntities",
+                    Value = new List<object>()
+                });
 
             if (level.TileTicks != null)
                 levelTag.Value.Add(new TAG_List()
@@ -258,9 +259,32 @@ namespace MinecraftRegion.Business
             throw new NotImplementedException();
         }
 
-        private static List<object> GetTileEntitiesTags(List<object> tileEntities)
+        private static List<object> GetTileEntitiesTags(List<BlockEntity> tileEntities)
         {
-            throw new NotImplementedException();
+            List<object> compoundList = new List<object>();
+
+            foreach (var item in tileEntities)
+            {
+                if (item is SignEntity)
+                    compoundList.Add(GetSignEntity(item as SignEntity));
+            }
+
+            return compoundList;
+        }
+
+        private static TAG_Compound GetSignEntity(SignEntity item)
+        {
+            TAG_Compound compound = new TAG_Compound();
+            compound.Value = new List<BaseTAG>();
+            compound.Value.Add(new TAG_String() { Name = "id", Value = item.Id });
+            compound.Value.Add(new TAG_Int() { Name = "x", Value = item.X });
+            compound.Value.Add(new TAG_Int() { Name = "y", Value = item.Y });
+            compound.Value.Add(new TAG_Int() { Name = "z", Value = item.Z });
+            compound.Value.Add(new TAG_String() { Name = "Text1", Value = item.Text1??"" });
+            compound.Value.Add(new TAG_String() { Name = "Text2", Value = item.Text2??"" });
+            compound.Value.Add(new TAG_String() { Name = "Text3", Value = item.Text3??"" });
+            compound.Value.Add(new TAG_String() { Name = "Text4", Value = item.Text4??"" });
+            return compound;
         }
     }
 }

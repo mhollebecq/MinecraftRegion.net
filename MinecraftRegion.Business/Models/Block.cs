@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MinecraftRegion.Business.Models.BlockEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,6 @@ namespace MinecraftRegion.Business.Models
         public byte BlockID_b { get; set; } 
         public short BlockID { get; set; }
         public BlockType BlockType { get; set; }
+        public BlockEntity BlockEntity { get; set; }
     }
 }

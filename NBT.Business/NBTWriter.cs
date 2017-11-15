@@ -380,7 +380,8 @@ namespace NBT.Business
         {
             int stringLength = tag.Name.Length;
             int headerLength = 3;//1 byte for type and 2 for string length
-            int dataLength = 1 * tag.Value.Length;
+            int valueStringLength = (!string.IsNullOrEmpty(tag.Value) ? tag.Value.Length : 0);
+            int dataLength = 1 * valueStringLength;
             int arrayLengthLength = 2;
             byte[] bytes = new byte[headerLength + stringLength + dataLength + arrayLengthLength];
 
@@ -393,11 +394,11 @@ namespace NBT.Business
                 bytes[3 + i] = (byte)tag.Name[i];
             }
 
-            byte[] numberBytes = BitConverter.GetBytes(tag.Value.Length);
+            byte[] numberBytes = BitConverter.GetBytes(valueStringLength);
             bytes[3 + stringLength] = numberBytes[1];
             bytes[4 + stringLength] = numberBytes[0];
 
-            for (int i = 0; i < tag.Value.Length; i++)
+            for (int i = 0; i < valueStringLength; i++)
             {
                 bytes[5 + stringLength + i] = (byte)tag.Value[i];
             }
