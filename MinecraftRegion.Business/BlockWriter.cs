@@ -12,7 +12,11 @@ namespace MinecraftRegion.Business
         public List<Region> WriteBlocks(IEnumerable<Block> blocks)
         {
             List<Region> regions = new List<Region>();
+            return WriteBlocks(blocks, regions);
+        }
 
+        public List<Region> WriteBlocks(IEnumerable<Block> blocks, List<Region> regions)
+        {
             foreach (Block block in blocks)
             {
                 //int xChunkInWorld = region.X * 32 + chunk.Sector.Level.XPos;
@@ -72,7 +76,7 @@ namespace MinecraftRegion.Business
                 }
 
                 LevelSection currentSection = currentChunk.Sector.Level.Sections.FirstOrDefault(s => s.Y == ySection);
-                if(currentSection == null)
+                if (currentSection == null)
                 {
                     currentSection = new LevelSection();
                     currentSection.Y = (byte)ySection;
