@@ -84,6 +84,11 @@ namespace MinecraftRegion.Business
                     currentSection.Blocks = new byte[4096];
                     currentSection.Data = new byte[2048];
                     currentSection.SkyLight = new byte[2048];
+                    for (int i = 0; i < 2048; i++)
+                    {
+                        //currentSection.BlockLight[i] = 255;
+                        currentSection.SkyLight[i] = 255;
+                    }
 
                     currentChunk.Sector.Level.Sections.Add(currentSection);
                 }

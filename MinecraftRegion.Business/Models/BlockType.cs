@@ -62,6 +62,7 @@ namespace MinecraftRegion.Business.Models
         public static BlockType Chest { get { return new BlockType(54, 0, "minecraft:chest"); } }
         public static BlockType DiamondOre { get { return new BlockType(56, 0, "minecraft:diamond_ore"); } }
         public static BlockType Sign { get { return new BlockType(63, 0, "minecraft:standing_sign"); } }
+        public static BlockType Rail { get { return new BlockType(66, 0, "minecraft:minecraft_rail"); } }
         public static BlockType RedstoneOre { get { return new BlockType(73, 0, "minecraft:redstone_ore"); } }
         public static BlockType SnowLayer { get { return new BlockType(78, 0, "minecraft:snow_layer"); } }
         public static BlockType Clay { get { return new BlockType(82, 0, "minecraft:clay"); } }
@@ -122,6 +123,7 @@ namespace MinecraftRegion.Business.Models
                 PolishedGranite,
                 Poppy,
                 Pumpkin,
+                Rail,
                 RedMushroom,
                 RedSand,
                 RedstoneOre,
