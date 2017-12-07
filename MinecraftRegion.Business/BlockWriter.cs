@@ -84,6 +84,7 @@ namespace MinecraftRegion.Business
                     currentSection.Blocks = new byte[4096];
                     currentSection.Data = new byte[2048];
                     currentSection.SkyLight = new byte[2048];
+                    currentSection.Add = new byte[2048];
                     for (int i = 0; i < 2048; i++)
                     {
                         //currentSection.BlockLight[i] = 255;
@@ -95,7 +96,11 @@ namespace MinecraftRegion.Business
 
                 int blockPos = 256 * yInSection + 16 * zInSection + xInSection;
                 currentSection.Blocks[blockPos] = block.BlockType.Value;
-
+                int maskSemiPosition = blockPos % 2 == 0 ? 0x0F : 0xF0;
+                int maskComplementSemiPosition = blockPos % 2 == 0 ? 0xF0 : 0x0F;
+                int multiplierSemiPosition = blockPos % 2 == 0 ? 0 : 4;
+                int addValue = (currentSection.Add[blockPos / 2] & maskComplementSemiPosition) + (block.BlockID_b << multiplierSemiPosition);
+                currentSection.Add[blockPos / 2] = (byte)addValue;
                 if (block.BlockEntity != null)
                 {
                     currentChunk.Sector.Level.TileEntities.Add(block.BlockEntity);
