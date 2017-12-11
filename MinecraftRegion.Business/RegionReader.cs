@@ -13,11 +13,13 @@ namespace MinecraftRegion.Business
     {
         public IEnumerable<Region> ReadFolder(string path)
         {
+            List<Region> regions = new List<Region>();
             foreach (var file in System.IO.Directory.GetFiles(path, "r.*.*.mca"))
             {
                 Region region = ReadOneRegion(file);
-                yield return region;
+                regions.Add(region);
             }
+            return regions;
         }
 
         public Region ReadOneRegion(string file)
@@ -37,6 +39,7 @@ namespace MinecraftRegion.Business
         {
             using (BinaryReader binaryReader = new BinaryReader(File.OpenRead(file)))
             {
+                List<Chunk> chunks = new List<Chunk>();
                 byte[] headerLocations = new byte[4096];
                 byte[] headerTimestamps = new byte[4096];
                 int read = binaryReader.Read(headerLocations, 0, 4096);
@@ -67,8 +70,9 @@ namespace MinecraftRegion.Business
                         default:
                             throw new NotImplementedException("Only compression ZLib is implemented");
                     }
-                    yield return location;
+                    chunks.Add(location);
                 }
+                return chunks;
             }
         }
 

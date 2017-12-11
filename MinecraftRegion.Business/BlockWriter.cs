@@ -99,8 +99,8 @@ namespace MinecraftRegion.Business
                 int maskSemiPosition = blockPos % 2 == 0 ? 0x0F : 0xF0;
                 int maskComplementSemiPosition = blockPos % 2 == 0 ? 0xF0 : 0x0F;
                 int multiplierSemiPosition = blockPos % 2 == 0 ? 0 : 4;
-                int addValue = (currentSection.Add[blockPos / 2] & maskComplementSemiPosition) + (block.BlockID_b << multiplierSemiPosition);
-                currentSection.Add[blockPos / 2] = (byte)addValue;
+                int dataValue = (currentSection.Data[blockPos / 2] & maskComplementSemiPosition) + (block.BlockID_b << multiplierSemiPosition);
+                currentSection.Data[blockPos / 2] = (byte)dataValue;
                 if (block.BlockEntity != null)
                 {
                     currentChunk.Sector.Level.TileEntities.Add(block.BlockEntity);

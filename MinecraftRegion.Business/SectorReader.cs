@@ -199,6 +199,10 @@ namespace MinecraftRegion.Business
                         default:
                             break;
                     }
+                    if(section.Blocks!=null && section.Blocks.Any(b=>b==66))
+                    {
+                        var stringoui = "toto";
+                    }
                 }
             }
 

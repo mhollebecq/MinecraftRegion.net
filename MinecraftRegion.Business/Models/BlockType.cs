@@ -145,7 +145,7 @@ namespace MinecraftRegion.Business.Models
 
         private static BlockType[] OfficialBlocks { get; }
 
-        public static BlockType GetBlock(byte value, byte add)
+        public static BlockType GetBlock(byte value, byte data)
         {
             return OfficialBlocks.First(b => b.Value == value /*&& b.Add == add*/);
         }
@@ -153,15 +153,15 @@ namespace MinecraftRegion.Business.Models
 
     public struct BlockType
     {
-        internal BlockType(byte value, byte add, string name) : this()
+        internal BlockType(byte value, byte data, string name) : this()
         {
             Value = value;
-            Add = add;
+            Data = data;
             Name = name;
         }
 
         public byte Value { get; }
-        public byte Add { get; }
+        public byte Data { get; }
         public String Name { get; }
     }
 }
