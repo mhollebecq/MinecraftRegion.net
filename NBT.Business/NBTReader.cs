@@ -47,7 +47,7 @@ namespace NBT.Business
                 case 11:
                     return ParseTAG_IntArray(stream);
                 case 12:
-                    break;
+                    return ParseTAG_LongArray(stream);
                 default:
                     break;
             }
@@ -87,6 +87,20 @@ namespace NBT.Business
             for (int i = 0; i < size; i++)
             {
                 tag.Value[i] = GetInt(stream);
+            }
+
+            return tag;
+        }
+
+        private TAG_LongArray ParseTAG_LongArray(Stream stream)
+        {
+            TAG_LongArray tag = new TAG_LongArray();
+            tag.Name = GetString(stream);
+            long size = GetInt(stream);
+            tag.Value = new long[size];
+            for (int i = 0; i < size; i++)
+            {
+                tag.Value[i] = GetLong(stream);
             }
 
             return tag;
@@ -167,6 +181,8 @@ namespace NBT.Business
                     return GetTAG_Compound(stream);
                 case 11:
                     return ParseTAG_IntArray(stream);
+                case 12:
+                    return ParseTAG_LongArray(stream);
                 default:
                     break;
             }

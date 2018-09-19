@@ -60,6 +60,7 @@
     <Compile Include="Models\Tags\TAG_IntArray.cs" />
     <Compile Include="Models\Tags\TAG_List.cs" />
     <Compile Include="Models\Tags\TAG_Long.cs" />
+    <Compile Include="Models\Tags\TAG_LongArray.cs" />
     <Compile Include="Models\Tags\TAG_Short.cs" />
     <Compile Include="Models\Tags\TAG_String.cs" />
     <Compile Include="Models\Tags\TypedTAG.cs" />

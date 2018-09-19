@@ -52,6 +52,8 @@ namespace MinecraftRegion.Business.Models
         public static BlockType LapisLazuliOre { get { return new BlockType(21, 0, "minecraft:lapis_ore"); } }
         public static BlockType Sandstone { get { return new BlockType(24, 0, "minecraft:sandstone"); } }
         public static BlockType Grass { get { return new BlockType(31, 0, "minecraft:tallgrass"); } }
+        public static BlockType WhiteWool { get { return new BlockType(35, 0, "minecraft:white_wool"); } }
+        public static BlockType OrangeWool { get { return new BlockType(35, 1, "minecraft:orange_wool"); } }
         public static BlockType Dandelion { get { return new BlockType(37, 0, "minecraft:yellow_flower"); } }
         public static BlockType Poppy { get { return new BlockType(38, 0, "minecraft:red_flower"); } }
         public static BlockType BrownMushroom { get { return new BlockType(39, 0, "minecraft:brown_mushroom"); } }
@@ -117,6 +119,7 @@ namespace MinecraftRegion.Business.Models
                 OakWoodPlanks,
                 OakSapling,
                 Obsidian,
+                OrangeWool,
                 Podzol,
                 PolishedAndesite,
                 PolishedDiorite,
@@ -138,7 +141,8 @@ namespace MinecraftRegion.Business.Models
                 StationaryWater,
                 SugarCane,
                 Stone,
-                Water
+                Water,
+                WhiteWool
             };
             //OfficialBlocks.Add
         }
