@@ -176,7 +176,7 @@ namespace NBT.Business
                 case 8:
                     return GetString(stream);
                 case 9:
-                    return ParseTAG_List(stream);
+                    return GetTAG_List(stream);
                 case 10:
                     return GetTAG_Compound(stream);
                 case 11:
@@ -187,6 +187,18 @@ namespace NBT.Business
                     break;
             }
             throw new NotImplementedException();
+        }
+
+        private TAG_List GetTAG_List(Stream stream)
+        {
+            TAG_List list = new TAG_List();
+            list.TagId = GetSbyte(stream);
+            list.Size = GetInt(stream);
+            for (int iList = 0; iList < list.Size; iList++)
+            {
+                list.Value.Add(GetSimpleValue((byte)list.TagId, stream));
+            }
+            return list;
         }
 
         private long GetLong(Stream stream)
