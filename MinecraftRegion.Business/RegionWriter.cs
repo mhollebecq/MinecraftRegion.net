@@ -146,7 +146,7 @@ namespace MinecraftRegion.Business
                 Name = "InhabitedTime",
                 Value = level.InhabitedTime
             });
-            levelTag.Value.Add(new TAG_ByteArray()
+            levelTag.Value.Add(new TAG_IntArray()
             {
                 Name = "Biomes",
                 Value = level.Biomes
@@ -219,26 +219,10 @@ namespace MinecraftRegion.Business
         {
             TAG_Compound sectionTag = new TAG_Compound();
 
-            if (section.Add != null)
-                sectionTag.Value.Add(new TAG_ByteArray()
-                {
-                    Name = "Add",
-                    Value = section.Add
-                });
             sectionTag.Value.Add(new TAG_ByteArray()
             {
                 Name = "BlockLight",
                 Value = section.BlockLight
-            });
-            sectionTag.Value.Add(new TAG_ByteArray()
-            {
-                Name = "Blocks",
-                Value = section.Blocks
-            });
-            sectionTag.Value.Add(new TAG_ByteArray()
-            {
-                Name = "Data",
-                Value = section.Data
             });
             sectionTag.Value.Add(new TAG_ByteArray()
             {

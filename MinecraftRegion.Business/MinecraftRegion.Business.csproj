@@ -55,6 +55,7 @@
     <Compile Include="Models\AddHandlers\IAddHandler.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\LevelSection.cs" />
+    <Compile Include="Models\Palette.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\ChunkSector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

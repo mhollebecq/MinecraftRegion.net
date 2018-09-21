@@ -64,7 +64,7 @@ namespace MinecraftRegion.Business
                     currentChunk.Sector = new ChunkSector();
                     currentChunk.Sector.DataVersion = 1343;
                     currentChunk.Sector.Level = new Level();
-                    currentChunk.Sector.Level.Biomes = new byte[256];
+                    currentChunk.Sector.Level.Biomes = new int[256];
                     currentChunk.Sector.Level.Entities = new List<object>();
                     currentChunk.Sector.Level.TileEntities = new List<Models.BlockEntities.BlockEntity>();
                     currentChunk.Sector.Level.HeightMap = new int[256];
@@ -81,10 +81,10 @@ namespace MinecraftRegion.Business
                     currentSection = new LevelSection();
                     currentSection.Y = (byte)ySection;
                     currentSection.BlockLight = new byte[2048];
-                    currentSection.Blocks = new byte[4096];
-                    currentSection.Data = new byte[2048];
+                    //currentSection.Blocks = new byte[4096];
+                    //currentSection.Data = new byte[2048];
                     currentSection.SkyLight = new byte[2048];
-                    currentSection.Add = new byte[2048];
+                    //currentSection.Add = new byte[2048];
                     for (int i = 0; i < 2048; i++)
                     {
                         //currentSection.BlockLight[i] = 255;
@@ -95,12 +95,12 @@ namespace MinecraftRegion.Business
                 }
 
                 int blockPos = 256 * yInSection + 16 * zInSection + xInSection;
-                currentSection.Blocks[blockPos] = block.BlockType.Value;
+                //currentSection.Blocks[blockPos] = block.BlockType.Value;
                 int maskSemiPosition = blockPos % 2 == 0 ? 0x0F : 0xF0;
                 int maskComplementSemiPosition = blockPos % 2 == 0 ? 0xF0 : 0x0F;
                 int multiplierSemiPosition = blockPos % 2 == 0 ? 0 : 4;
-                int dataValue = (currentSection.Data[blockPos / 2] & maskComplementSemiPosition) + (block.BlockID_b << multiplierSemiPosition);
-                currentSection.Data[blockPos / 2] = (byte)dataValue;
+                //int dataValue = (currentSection.Data[blockPos / 2] & maskComplementSemiPosition) + (block.BlockID_b << multiplierSemiPosition);
+                //currentSection.Data[blockPos / 2] = (byte)dataValue;
                 if (block.BlockEntity != null)
                 {
                     currentChunk.Sector.Level.TileEntities.Add(block.BlockEntity);

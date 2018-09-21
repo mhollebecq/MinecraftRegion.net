@@ -5,7 +5,7 @@ namespace MinecraftRegion.Business.Models
 {
     public class Level
     {
-        public byte[] Biomes { get; internal set; }
+        public int[] Biomes { get; internal set; }
         public List<object> Entities { get; internal set; }
         public int[] HeightMap { get; internal set; }
         public long InhabitedTime { get; internal set; }
