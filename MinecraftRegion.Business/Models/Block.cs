@@ -15,10 +15,12 @@ namespace MinecraftRegion.Business.Models
         public int ZSection { get; set; } 
         public int ZWorld { get; set; } 
         public int YWorld { get; set; } 
-        public byte BlockID_a { get; set; } 
-        public byte BlockID_b { get; set; } 
-        public short BlockID { get; set; }
         public BlockType BlockType { get; set; }
         public BlockEntity BlockEntity { get; set; }
+
+        public override string ToString()
+        {
+            return $"{XWorld} {YWorld} {ZWorld} - {BlockType.Name}";
+        }
     }
 }

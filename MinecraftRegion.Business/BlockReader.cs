@@ -26,6 +26,37 @@ namespace MinecraftRegion.Business
                 var sections = chunk.Sector.Level.Sections;
                 foreach (var section in sections)
                 {
+                    int length = (int)(Math.Max(Math.Ceiling(Math.Log(section.Palette.Count, 2)),4));
+                    if (length%4 != 0)
+                        throw new NotImplementedException("Come back later, we only handle factors of 64");
+
+                    int indicesInALong = 64 / length;
+                    bool fitWell = 64 % length == 0;
+                    for (int blockPos = 0; blockPos < 4096; blockPos++)
+                    {
+                        int longIndex = blockPos / (64 / length);
+                        int indexInCurrentLong = blockPos * length - longIndex*64;
+                        var mask = (int)Math.Pow(length, 2)-1;
+                        var paletteIndex = (int)((section.BlockStates[longIndex] >> indexInCurrentLong)&mask);
+                        var paletteItem = section.Palette[paletteIndex];
+
+                        int xSection = blockPos % 16;
+                        int xWorld = xChunkInWorld * 16 + xSection;
+                        int zSection = (blockPos / 16) % 16;
+                        int zWorld = zChunkInWorld * 16 + zSection;
+                        int yWorld = (blockPos / 256) + 16 * section.Y;
+
+                        BlockType blockType = BlockTypes.GetBlock(paletteItem.Name);
+                        blocks.Add(new Block()
+                        {
+                            BlockType = blockType,
+                            XSection = xSection,
+                            XWorld = xWorld,
+                            YWorld = yWorld,
+                            ZSection = zSection,
+                            ZWorld = zWorld
+                        });
+                    }
                     //for (int blockPos = 0; blockPos < section.Blocks.Length; blockPos++)
                     //{
                     //    int xSection = blockPos % 16;

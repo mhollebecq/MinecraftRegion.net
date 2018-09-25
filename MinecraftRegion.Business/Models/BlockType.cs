@@ -10,18 +10,18 @@ namespace MinecraftRegion.Business.Models
     {
         public static BlockType Air { get { return new BlockType("minecraft:air"); } }
         public static BlockType Stone { get { return new BlockType("minecraft:stone"); } }
-        public static BlockType Granite { get { return new BlockType("minecraft:stone"); } }
-        public static BlockType PolishedGranite { get { return new BlockType("minecraft:stone"); } }
-        public static BlockType Diorite { get { return new BlockType("minecraft:stone"); } }
-        public static BlockType PolishedDiorite { get { return new BlockType("minecraft:stone"); } }
-        public static BlockType Andesite { get { return new BlockType("minecraft:stone"); } }
-        public static BlockType PolishedAndesite { get { return new BlockType("minecraft:stone"); } }
-        public static BlockType GrassBlock { get { return new BlockType("minecraft:grass"); } }
+        public static BlockType Granite { get { return new BlockType("minecraft:granite"); } }
+        public static BlockType PolishedGranite { get { return new BlockType("minecraft:polished_granite"); } }
+        public static BlockType Diorite { get { return new BlockType("minecraft:diorite"); } }
+        public static BlockType PolishedDiorite { get { return new BlockType("minecraft:polished_diorite"); } }
+        public static BlockType Andesite { get { return new BlockType("minecraft:andesite"); } }
+        public static BlockType PolishedAndesite { get { return new BlockType("minecraft:polished_andesite"); } }
+        public static BlockType GrassBlock { get { return new BlockType("minecraft:grass_block"); } }
         public static BlockType Dirt { get { return new BlockType("minecraft:dirt"); } }
-        public static BlockType Podzol { get { return new BlockType("minecraft:dirt"); } }
-        public static BlockType CoarseDirt { get { return new BlockType("minecraft:dirt"); } }
+        public static BlockType Podzol { get { return new BlockType("minecraft:podzol"); } }
+        public static BlockType CoarseDirt { get { return new BlockType("minecraft:coarse_dirt"); } }
         public static BlockType Cobblestone { get { return new BlockType("minecraft:cobblestone"); } }
-        public static BlockType OakWoodPlanks { get { return new BlockType("minecraft:planks"); } }
+        public static BlockType OakWoodPlanks { get { return new BlockType("minecraft:oak_planks"); } }
         public static BlockType SpruceWoodPlanks { get { return new BlockType("minecraft:planks"); } }
         public static BlockType BirchWoodPlanks { get { return new BlockType("minecraft:planks"); } }
         public static BlockType JungleWoodPlanks { get { return new BlockType("minecraft:planks"); } }
@@ -51,7 +51,7 @@ namespace MinecraftRegion.Business.Models
         public static BlockType Leaves { get { return new BlockType("minecraft:leaves"); } }
         public static BlockType LapisLazuliOre { get { return new BlockType("minecraft:lapis_ore"); } }
         public static BlockType Sandstone { get { return new BlockType("minecraft:sandstone"); } }
-        public static BlockType Grass { get { return new BlockType("minecraft:tallgrass"); } }
+        public static BlockType Grass { get { return new BlockType("minecraft:grass"); } }
         public static BlockType WhiteWool { get { return new BlockType("minecraft:white_wool"); } }
         public static BlockType OrangeWool { get { return new BlockType("minecraft:orange_wool"); } }
         public static BlockType Dandelion { get { return new BlockType("minecraft:yellow_flower"); } }
