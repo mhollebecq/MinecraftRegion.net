@@ -16,5 +16,6 @@ namespace MinecraftRegion.Business.Models
     public class PaletteProperties
     {
         public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

@@ -234,8 +234,45 @@ namespace MinecraftRegion.Business
                 Name = "Y",
                 Value = section.Y
             });
+            sectionTag.Value.Add(GetPalettes(section.Palette));
+            sectionTag.Value.Add(new TAG_LongArray()
+            {
+                Name = "BlockStates",
+                Value = section.BlockStates
+            });
 
             return sectionTag;
+        }
+
+        private static TAG_List GetPalettes(List<Palette> palette)
+        {
+            TAG_List palettesTag = new TAG_List();
+            palettesTag.Name = "Palette";
+            palettesTag.TagId = (sbyte)TagType.Compound;
+
+            foreach(Palette paletteObj in palette)
+            {
+                palettesTag.Value.Add(GetPalette(paletteObj));
+            }
+
+            return palettesTag;
+        }
+
+        private static TAG_Compound GetPalette(Palette paletteObj)
+        {
+            TAG_Compound paletteTag = new TAG_Compound();
+
+            paletteTag.Value.Add(new TAG_String()
+            {
+                Name = "Name",
+                Value = paletteObj.Name
+            });
+
+            if (paletteObj.Properties != null)
+            {
+
+            }
+            return paletteTag;
         }
 
         private static List<object> GetEntitiesTags(List<object> entities)
