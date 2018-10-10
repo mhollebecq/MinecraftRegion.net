@@ -103,6 +103,21 @@ namespace MinecraftRegion.Business
                         case "TileTicks":
                             level.TileTicks = CheckTagType<TAG_List>(baseTag).Value;
                             break;
+                        case "Status":
+                            level.Status = CheckTagType<TAG_String>(baseTag).Value;
+                            break;
+                        case "LiquidsToBeTicked":
+                            level.LiquidsToBeTicked = CheckTagType<TAG_List>(baseTag).Value;
+                            break;
+                        case "ToBeTicked":
+                            level.ToBeTicked = CheckTagType<TAG_List>(baseTag).Value;
+                            break;
+                        case "PostProcessing":
+                            level.PostProcessing = CheckTagType<TAG_List>(baseTag).Value;
+                            break;
+                        case "LiquidTicks":
+                            level.LiquidTicks = CheckTagType<TAG_List>(baseTag).Value;
+                            break;
                         default:
                             break;
                     }

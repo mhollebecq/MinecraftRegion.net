@@ -18,5 +18,10 @@ namespace MinecraftRegion.Business.Models
         public byte V { get; internal set; }
         public int XPos { get; internal set; }
         public int ZPos { get; internal set; }
+        public string Status { get; internal set; }
+        public List<object> LiquidsToBeTicked { get; internal set; }
+        public List<object> ToBeTicked { get; internal set; }
+        public List<object> PostProcessing { get; internal set; }
+        public List<object> LiquidTicks { get; internal set; }
     }
 }

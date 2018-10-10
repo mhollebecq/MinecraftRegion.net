@@ -57,35 +57,6 @@ namespace MinecraftRegion.Business
                             ZWorld = zWorld
                         });
                     }
-                    //for (int blockPos = 0; blockPos < section.Blocks.Length; blockPos++)
-                    //{
-                    //    int xSection = blockPos % 16;
-                    //    int xWorld = xChunkInWorld * 16 + xSection;
-                    //    int zSection = (blockPos / 16) % 16;
-                    //    int zWorld = zChunkInWorld * 16 + zSection;
-                    //    int yWorld = (blockPos / 256) + 16 * section.Y;
-                    //    byte BlockID_a = section.Blocks[blockPos];
-                    //    byte BlockID_b = (byte)0;
-                    //    if (section.Data != null)
-                    //        BlockID_b = Nibble4(section.Data, blockPos);
-                    //    short BlockID = (short)(BlockID_a + (BlockID_b << 8));
-                    //    //byte BlockData = Nibble4(section.Data, blockPos);
-                    //    //byte Blocklight = Nibble4(section.BlockLight, blockPos);
-                    //    //byte Skylight = Nibble4(section.SkyLight, blockPos);
-                    //    BlockType blockType = BlockTypes.GetBlock(BlockID_a, BlockID_b);
-                    //    blocks.Add(new Block()
-                    //    {
-                    //        BlockID = BlockID,
-                    //        BlockID_a = BlockID_a,
-                    //        BlockID_b = BlockID_b,
-                    //        BlockType = blockType,
-                    //        XSection = xSection,
-                    //        XWorld = xWorld,
-                    //        YWorld = yWorld,
-                    //        ZSection = zSection,
-                    //        ZWorld = zWorld
-                    //    });
-                    //}
                 }
             }
             return blocks;
