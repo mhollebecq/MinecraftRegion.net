@@ -54,6 +54,20 @@ namespace MinecraftRegion.Business.Models
         public static BlockType Grass { get { return new BlockType("minecraft:grass"); } }
         public static BlockType WhiteWool { get { return new BlockType("minecraft:white_wool"); } }
         public static BlockType OrangeWool { get { return new BlockType("minecraft:orange_wool"); } }
+        public static BlockType MagentaWool { get { return new BlockType("minecraft:magenta_wool"); } }
+        public static BlockType LightBlueWool { get { return new BlockType("minecraft:light_blue_wool"); } }
+        public static BlockType YellowWool { get { return new BlockType("minecraft:yellow_wool"); } }
+        public static BlockType LimeWool { get { return new BlockType("minecraft:lime_wool"); } }
+        public static BlockType PinkWool { get { return new BlockType("minecraft:pink_wool"); } }
+        public static BlockType GrayWool { get { return new BlockType("minecraft:gray_wool"); } }
+        public static BlockType LightGrayWool { get { return new BlockType("minecraft:light_gray_wool"); } }
+        public static BlockType CyanWool { get { return new BlockType("minecraft:cyan_wool"); } }
+        public static BlockType PurpleWool { get { return new BlockType("minecraft:purple_wool"); } }
+        public static BlockType BlueWool { get { return new BlockType("minecraft:blue_wool"); } }
+        public static BlockType BrownWool { get { return new BlockType("minecraft:brown_wool"); } }
+        public static BlockType GreenWool { get { return new BlockType("minecraft:green_wool"); } }
+        public static BlockType RedWool { get { return new BlockType("minecraft:red_wool"); } }
+        public static BlockType BlackWool { get { return new BlockType("minecraft:black_wool"); } }
         public static BlockType Dandelion { get { return new BlockType("minecraft:yellow_flower"); } }
         public static BlockType Poppy { get { return new BlockType("minecraft:red_flower"); } }
         public static BlockType BrownMushroom { get { return new BlockType("minecraft:brown_mushroom"); } }
@@ -86,11 +100,15 @@ namespace MinecraftRegion.Business.Models
                 BirchWood,
                 BirchWoodPlanks,
                 BirchSapling,
+                BlackWool,
+                BlueWool,
                 BrownMushroom,
+                BrownWool,
                 Chest,
                 Clay,
                 CoalOre,
                 Cobblestone,
+                CyanWool,
                 Dandelion,
                 DiamondOre,
                 Diorite,
@@ -104,6 +122,8 @@ namespace MinecraftRegion.Business.Models
                 Grass,
                 GrassBlock,
                 Gravel,
+                GrayWool,
+                GreenWool,
                 IronOre,
                 JungleWood,
                 JungleWoodPlanks,
@@ -112,6 +132,10 @@ namespace MinecraftRegion.Business.Models
                 LargeFlowers,
                 Lava,
                 Leaves,
+                LightBlueWool,
+                LightGrayWool,
+                LimeWool,
+                MagentaWool,
                 MonsterEgg,
                 MonsterSpawner,
                 MossStone,
@@ -120,16 +144,19 @@ namespace MinecraftRegion.Business.Models
                 OakSapling,
                 Obsidian,
                 OrangeWool,
+                PinkWool,
                 Podzol,
                 PolishedAndesite,
                 PolishedDiorite,
                 PolishedGranite,
                 Poppy,
                 Pumpkin,
+                PurpleWool,
                 Rail,
                 RedMushroom,
                 RedSand,
                 RedstoneOre,
+                RedWool,
                 Sand,
                 Sandstone,
                 Sign,
@@ -142,7 +169,8 @@ namespace MinecraftRegion.Business.Models
                 SugarCane,
                 Stone,
                 Water,
-                WhiteWool
+                WhiteWool,
+                YellowWool
             };
             //OfficialBlocks.Add
         }

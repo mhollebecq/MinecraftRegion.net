@@ -196,6 +196,45 @@ namespace NBT.Business
             return bytes;
         }
 
+        public byte[] GetBytes(TAG_LongArray tag)
+        {
+            int stringLength = tag.Name.Length;
+            int headerLength = 3;//1 byte for type and 2 for string length
+            int dataLength = 8 * tag.Value.Length;
+            int arrayLengthLength = 4;
+            byte[] bytes = new byte[headerLength + stringLength + dataLength + arrayLengthLength];
+
+            bytes[0] = (byte)TagType.LongArray;
+            bytes[1] = (byte)((stringLength & 0xFF00) >> 8);
+            bytes[2] = (byte)(stringLength & 0xFF);
+
+            for (int i = 0; i < stringLength; i++)
+            {
+                bytes[3 + i] = (byte)tag.Name[i];
+            }
+
+            byte[] numberBytes = BitConverter.GetBytes(tag.Value.Length);
+            bytes[3 + stringLength] = numberBytes[3];
+            bytes[4 + stringLength] = numberBytes[2];
+            bytes[5 + stringLength] = numberBytes[1];
+            bytes[6 + stringLength] = numberBytes[0];
+
+            for (int i = 0; i < tag.Value.Length; i++)
+            {
+                byte[] numberBytesValue = BitConverter.GetBytes(tag.Value[i]);
+                bytes[7 + stringLength + 8 * i] = numberBytesValue[7];
+                bytes[7 + stringLength + 8 * i + 1] = numberBytesValue[6];
+                bytes[7 + stringLength + 8 * i + 2] = numberBytesValue[5];
+                bytes[7 + stringLength + 8 * i + 3] = numberBytesValue[4];
+                bytes[7 + stringLength + 8 * i + 4] = numberBytesValue[3];
+                bytes[7 + stringLength + 8 * i + 5] = numberBytesValue[2];
+                bytes[7 + stringLength + 8 * i + 6] = numberBytesValue[1];
+                bytes[7 + stringLength + 8 * i + 7] = numberBytesValue[0];
+            }
+
+            return bytes;
+        }
+
         public byte[] GetBytes(TAG_List tag)
         {
             int stringLength = tag.Name.Length;
@@ -254,7 +293,7 @@ namespace NBT.Business
                 case TagType.String:
                     break;
                 case TagType.List:
-                    break;
+                    return new Func<object, byte[]>((o)=>{ return GetPayloadBytes((List<object>)o); });
                 case TagType.Compound:
                     return new Func<object, byte[]>((o) => { return GetPayloadBytes((TAG_Compound)o); });
                 case TagType.IntArray:
@@ -264,6 +303,20 @@ namespace NBT.Business
             }
 
             throw new ArgumentException("Unable to find how return byte array");
+        }
+
+        private byte[] GetPayloadBytes(List<object> tag)
+        {
+            byte[] bytes = new byte[5];
+            bytes[0] = (byte)TagType.End;
+            //byte[] numberBytes = BitConverter.GetBytes(tag.Count);
+            byte[] numberBytes = BitConverter.GetBytes(0);
+            bytes[1] = numberBytes[3];
+            bytes[2] = numberBytes[2];
+            bytes[3] = numberBytes[1];
+            bytes[4] = numberBytes[0];
+
+            return bytes;
         }
 
         private byte[] GetPayloadBytes(TAG_Compound tag)
@@ -336,6 +389,8 @@ namespace NBT.Business
                     return GetBytes((TAG_Compound)innerTag);
                 case TagType.IntArray:
                     return GetBytes((TAG_IntArray)innerTag);
+                case TagType.LongArray:
+                    return GetBytes((TAG_LongArray)innerTag);
                 default:
                     throw new ArgumentException("Cannot get bytes for " + innerTag.TagType);
             }

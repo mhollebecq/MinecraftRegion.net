@@ -194,6 +194,35 @@ namespace MinecraftRegion.Business
                     Name = "TileTicks",
                     Value = level.TileTicks
                 });
+            levelTag.Value.Add(new TAG_String()
+            {
+                Name="Status",
+                Value = level.Status
+            });
+            levelTag.Value.Add(new TAG_List()
+            {
+                Name = "LiquidTicks",
+                TagId = (sbyte)TagType.End,
+                Value = new List<object>()
+            });
+            levelTag.Value.Add(new TAG_List()
+            {
+                Name = "LiquidsToBeTicked",
+                TagId = (sbyte)TagType.List,
+                Value = level.LiquidsToBeTicked
+            });
+            levelTag.Value.Add(new TAG_List()
+            {
+                Name = "ToBeTicked",
+                TagId = (sbyte)TagType.List,
+                Value = level.ToBeTicked
+            });
+            levelTag.Value.Add(new TAG_List()
+            {
+                Name = "PostProcessing",
+                TagId = (sbyte)TagType.List,
+                Value = level.PostProcessing
+            });
 
             TAG_List leveSectionsTag = GetLevelSectionsTag(level.Sections);
             levelTag.Value.Add(leveSectionsTag);
