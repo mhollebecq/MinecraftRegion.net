@@ -13,13 +13,13 @@ namespace MinecraftRegion.Business
     {
         public IEnumerable<Region> ReadFolder(string path)
         {
-            List<Region> regions = new List<Region>();
+            //List<Region> regions = new List<Region>();
             foreach (var file in System.IO.Directory.GetFiles(path, "r.*.*.mca"))
             {
-                Region region = ReadOneRegion(file);
-                regions.Add(region);
+                yield return ReadOneRegion(file);
+                //regions.Add(region);
             }
-            return regions;
+            //return regions;
         }
 
         public Region ReadOneRegion(string file)

@@ -35,8 +35,8 @@ namespace MinecraftRegion.Business.Models
         public byte[] SkyLight { get; set; }
 
 
-        public List<Palette> Palette { get; internal set; }
+        public List<Palette> Palette { get; set; }
 
-        public long[] BlockStates { get; internal set; }
+        public long[] BlockStates { get; set; }
     }
 }

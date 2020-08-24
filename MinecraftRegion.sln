@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftRegion.Business", "MinecraftRegion.Business\MinecraftRegion.Business.csproj", "{7D891294-F15B-494E-9260-A94F0BC3B3C0}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBT.Business", "NBT.Business\NBT.Business.csproj", "{A96D8016-AAC1-4DD7-99DF-08B488C1B955}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBT.Business.Tests", "NBT.Business.Tests\NBT.Business.Tests.csproj", "{A5F2C50D-6257-41C7-BB7D-1B3DC4DD3E00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinecraftRegion.Business.Tests", "MinecraftRegion.Business.Tests\MinecraftRegion.Business.Tests.csproj", "{017DFBFC-CBC7-4E92-8091-3D13C7E3FF25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{A5F2C50D-6257-41C7-BB7D-1B3DC4DD3E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5F2C50D-6257-41C7-BB7D-1B3DC4DD3E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5F2C50D-6257-41C7-BB7D-1B3DC4DD3E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{017DFBFC-CBC7-4E92-8091-3D13C7E3FF25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{017DFBFC-CBC7-4E92-8091-3D13C7E3FF25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{017DFBFC-CBC7-4E92-8091-3D13C7E3FF25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{017DFBFC-CBC7-4E92-8091-3D13C7E3FF25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E9A1B75-9DBE-45C5-9A0F-07EA576C224C}
 	EndGlobalSection
 EndGlobal

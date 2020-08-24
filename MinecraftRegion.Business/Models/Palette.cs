@@ -11,6 +11,11 @@ namespace MinecraftRegion.Business.Models
         public string Name { get; set; }
 
         public PaletteProperties Properties { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class PaletteProperties

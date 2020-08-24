@@ -11,7 +11,7 @@ namespace MinecraftRegion.Business.Models
         public long InhabitedTime { get; internal set; }
         public long LastUpdate { get; internal set; }
         public byte LightPopulated { get; internal set; }
-        public List<LevelSection> Sections { get; internal set; }
+        public List<LevelSection> Sections { get; set; }
         public byte TerrainPopulated { get; internal set; }
         public List<BlockEntity> TileEntities { get; internal set; }
         public List<object> TileTicks { get; internal set; }

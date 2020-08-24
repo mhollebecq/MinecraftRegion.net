@@ -26,18 +26,21 @@ namespace MinecraftRegion.Business
                 var sections = chunk.Sector.Level.Sections;
                 foreach (var section in sections)
                 {
-                    int length = (int)(Math.Max(Math.Ceiling(Math.Log(section.Palette.Count, 2)),4));
-                    if (length%4 != 0)
-                        throw new NotImplementedException("Come back later, we only handle factors of 64");
+                    int length = (int)(Math.Max(Math.Ceiling(Math.Log(section.Palette.Count, 2)), 4));
+                    if (length % 4 != 0)
+                    {
+
+                    }
+                    var mask = (1 << length) - 1;
 
                     int indicesInALong = 64 / length;
                     bool fitWell = 64 % length == 0;
                     for (int blockPos = 0; blockPos < 4096; blockPos++)
                     {
                         int longIndex = blockPos / (64 / length);
-                        int indexInCurrentLong = blockPos * length - longIndex*64;
-                        var mask = (int)Math.Pow(length, 2)-1;
-                        var paletteIndex = (int)((section.BlockStates[longIndex] >> indexInCurrentLong)&mask);
+                        int indexInCurrentLong = blockPos * length - longIndex * 64;
+                        
+                        int paletteIndex = GetPaletteIndex(section, longIndex, indexInCurrentLong, length, mask, fitWell);
                         var paletteItem = section.Palette[paletteIndex];
 
                         int xSection = blockPos % 16;
@@ -91,11 +94,35 @@ namespace MinecraftRegion.Business
             return blocks;
         }
 
+        private static int GetPaletteIndex(LevelSection section, int longIndex, int indexInCurrentLong, int length, int mask, bool fitWell)
+        {
+            if (fitWell)
+                return GetSimplePaletteIndex(section, longIndex, indexInCurrentLong, mask);
+            else
+            {
+                if (indexInCurrentLong < 0)
+                {
+                    var smallPart = GetSimplePaletteIndex(section, longIndex-1, 64 + indexInCurrentLong, mask);
+                    int bigPartMask = (1 << (length + indexInCurrentLong)) -1;
+
+                    int paletteIndex = smallPart + ((int)(section.BlockStates[longIndex] & bigPartMask) << (indexInCurrentLong * -1));
+                    return paletteIndex;
+                }
+                else
+                    return GetSimplePaletteIndex(section, longIndex, indexInCurrentLong, mask);
+            }
+        }
+
+        private static int GetSimplePaletteIndex(LevelSection section, int longIndex, int indexInCurrentLong, int mask)
+        {
+            return (int)((section.BlockStates[longIndex] >> indexInCurrentLong) & mask);
+        }
+
         public List<Block> ReadBlocks(IEnumerable<Region> regions)
         {
             List<Block> blocks = new List<Block>();
 
-            foreach(Region region in regions)
+            foreach (Region region in regions)
             {
                 blocks.AddRange(ReadBlocks(region));
             }

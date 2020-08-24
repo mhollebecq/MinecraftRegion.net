@@ -28,7 +28,14 @@ namespace MinecraftRegion.Business
                 //int zSection = (blockPos / 16) % 16;
                 //int zWorld = zChunkInWorld * 16 + zSection;
                 //int yWorld = (blockPos / 256) + 16 * section.Y;
-
+                blocks
+                    .Select(b => (
+                                XChunkInWorld: (block.XWorld) / 16,
+                                ZChunkInWorld: (block.ZWorld) / 16,
+                                Block: b
+                            ))
+                    .GroupBy(b => (b.XChunkInWorld, b.ZChunkInWorld), b => b.Block);
+                    
                 //Chunk are 16 blocks wide
                 int xChunkInWorld = (block.XWorld) / 16;
                 int zChunkInWorld = (block.ZWorld) / 16;
